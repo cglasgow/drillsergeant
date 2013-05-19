@@ -47,17 +47,23 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
+import java.util.ArrayList;
+
 import javax.swing.JInternalFrame;
 import javax.swing.JDesktopPane;
 import javax.swing.JLayeredPane;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 
 import data.Exercise;
 import data.Workout;
+import data.xml.XMLSaxParser;
 
 public class Drill_Sergeant {
 
 	private JFrame frmDrillSergeant;
 	private Preview frmPreview = new Preview();
+	private JList listWorkout;
 	private JTextField txtCurrent;
 	private JTextField txtCurrentSet;
 	private JTextField txtTotalSets;
@@ -153,6 +159,12 @@ public class Drill_Sergeant {
 		JButton btnOpen = new JButton("Open Workout");
 		btnOpen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try {
+					callParser("config/myworkouts.xml");
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				swapView("card2");
 			}
 		});
@@ -232,9 +244,9 @@ public class Drill_Sergeant {
 		panelTitleBorderCard2.add(scrollWorkout);
 		
 		//-------------
-		// Borders
+		// List
 		//-------------
-		JList listWorkout = new JList();
+		listWorkout = new JList();
 		listWorkout.setDragEnabled(true);
 		scrollWorkout.setViewportView(listWorkout);
 		listWorkout.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -901,4 +913,26 @@ public class Drill_Sergeant {
 	public void mdPrint(String outputString, Component component) {
 		JOptionPane.showMessageDialog(component, outputString, "Debug", JOptionPane.INFORMATION_MESSAGE, null);
 	}
+	
+	
+	
+	
+	public void callParser(String uri) throws Exception {
+    	//Create a "parser factory" for creating SAX parsers
+    	SAXParserFactory spfac = SAXParserFactory.newInstance();
+	
+    	//Now use the parser factory to create a SAXParser object
+    	SAXParser sp = spfac.newSAXParser();
+	
+    	//Create an instance of this class; it defines all the handler methods
+    	XMLSaxParser handler = new XMLSaxParser();
+	
+    	//Finally, tell the parser to parse the input and notify the handler
+    	sp.parse(uri, handler);
+    	handler.readList();
+    	
+//    	for (int i=0; i < workoutListSize; i++) {
+//    		 handler.getWorkout(i);
+//    	}
+	}  
 }

@@ -1,0 +1,42 @@
+r16
+-Added majority of functionality for Preview window.  Still needs a little tweaking but it is working.
+---------------------
+r15
+-Removed /config placed it one folder level up.
+---------------------
+r14
+Removed folder /logic
+---------------------
+r13
+Changed package name from "logic" to "data". (Need to do this differently next time so log info is not lost.)
+---------------------
+r12
+Made the Workout Preview screen a separate window so that the user can see it while they are editing the workout instead of having to switch back and forth between screens.
+---------------------
+r11
+
+---------------------
+r10
+-Primarily added a significant amount of functionality to the Edit Workout screen.
+---------------------
+r9
+-Added classes Exercise, Workout and Settings with basic skeleton. -Modified 'Edit Workout' screen. -Added /config to hold files for maintaining configurations for the application.
+---------------------
+r8
+
+---------------------
+r7
+Removed /docs.
+---------------------
+r6
+-Got rid of versioning on everything in the Drill Sergeant folder except /src. -Rearranged the UI layout of the "Edit Workout" screen.
+---------------------
+r5
+Added some basic navigation functionality just so the screens of the program can be browsed through.
+---------------------
+r4
+First commit.  UI has been completely layout out.  The code has not been modified yet and no functionality has been implemented.
+---------------------
+r3
+Import.
+---------------------

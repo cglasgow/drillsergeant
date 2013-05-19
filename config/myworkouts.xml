@@ -1,0 +1,12 @@
+<xml>
+	<Workout id="0" name="Workout 1" dateCreated="051813" lastModified="051813" lengthInSecs="3600">
+		<Exercise pos="1" name="Pushups" sets="4" reps="40" restBetween="120" RestAfter="60"/>
+		<Exercise pos="2" name="Pullups" sets="2" reps="20" restBetween="120" RestAfter="60"/>
+		<Exercise pos="3" name="Crunches" sets="3" reps="50" restBetween="60" RestAfter="0"/>
+	</Workout>
+	<Workout id="1" name="Workout 2" dateCreated="051813" lastModified="051813" lengthInSecs="3600">
+		<Exercise pos="1" name="Pushups" sets="4" reps="40" restBetween="120" RestAfter="60"/>
+		<Exercise pos="2" name="Pullups" sets="2" reps="20" restBetween="120" RestAfter="60"/>
+		<Exercise pos="3" name="Crunches" sets="3" reps="50" restBetween="60" RestAfter="0"/>
+	</Workout>
+</xml>

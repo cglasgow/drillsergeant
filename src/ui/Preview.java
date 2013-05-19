@@ -138,17 +138,6 @@ public class Preview extends JFrame {
 	}
 	
 	public int add(Exercise theExercise) {
-		//int position = theExercise.getPosition();
-		
-		//String name = theExercise.getName();
-		//String sets = Integer.toString(theExercise.getSets());
-		//String reps = Integer.toString(theExercise.getReps());
-		//String restBetweenSets = Integer.toString(theExercise.getRestBetween());
-		//String restAfterExercise = Integer.toString(theExercise.getRestAfter());
-		
-		//String allInfo = "Name: " + name + "   |   Sets: " + sets + "   |   Reps: " + reps + "   |   Rest Between: " + restBetweenSets + "   |   Rest After: " + restAfterExercise;
-		//model.addRow(new Object[]{allInfo});
-		
 		String name = theExercise.getName();
 		int sets = theExercise.getSets();
 		int reps = theExercise.getReps();
