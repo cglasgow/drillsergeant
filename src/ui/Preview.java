@@ -24,7 +24,6 @@ import javax.swing.ListSelectionModel;
 import javax.swing.DropMode;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.JTextPane;
 import java.awt.ComponentOrientation;
 
 
@@ -33,31 +32,11 @@ public class Preview extends JFrame {
 	private JPanel contentPane;
 	private JTable table;
 	private DefaultTableModel model;
-	/**
-	 * @wbp.nonvisual location=831,-11
-	 */
-	private final JTextPane textPane = new JTextPane();
 	
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Preview frame = new Preview();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
+	//************************************************************
+	// initialize
+	//		Initialize the contents of the frame.
+	//************************************************************
 	public Preview() {
 		setType(Type.POPUP);
 		setTitle("Workout Preview");

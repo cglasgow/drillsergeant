@@ -19,43 +19,6 @@ public class XMLSaxParser extends DefaultHandler {
     private Exercise exercise;
     private String temp;
     private ArrayList<Workout> workoutList = new ArrayList<Workout>();
-   
-//    public void callParser(String uri) throws Exception {
-//
-//    	//Create a "parser factory" for creating SAX parsers
-//    	SAXParserFactory spfac = SAXParserFactory.newInstance();
-//	
-//    	//Now use the parser factory to create a SAXParser object
-//    	SAXParser sp = spfac.newSAXParser();
-//	
-//    	//Create an instance of this class; it defines all the handler methods
-//    	XMLSaxParser handler = new XMLSaxParser();
-//	
-//    	//Finally, tell the parser to parse the input and notify the handler
-//    	sp.parse(uri, handler);
-//	
-//    	handler.readList();
-//	}    
-
-//    /** The main method sets things up for parsing */
-//    public static void main(String[] args) throws IOException, SAXException,
-//                  ParserConfigurationException {
-//          
-//           //Create a "parser factory" for creating SAX parsers
-//           SAXParserFactory spfac = SAXParserFactory.newInstance();
-//
-//           //Now use the parser factory to create a SAXParser object
-//           SAXParser sp = spfac.newSAXParser();
-//
-//           //Create an instance of this class; it defines all the handler methods
-//           XMLSaxParser handler = new XMLSaxParser();
-//
-//           //Finally, tell the parser to parse the input and notify the handler
-//           sp.parse("/config/myworkouts.xml", handler);  //***MOVED***
-//          
-//           handler.readList();
-//
-//    }
     
 
     /*

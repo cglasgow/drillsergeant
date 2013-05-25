@@ -61,31 +61,31 @@ import data.xml.XMLSaxParser;
 
 public class Drill_Sergeant {
 
-	private JFrame frmDrillSergeant;
-	private Preview frmPreview = new Preview();
-	private JList listWorkout;
-	private JTextField txtCurrent;
-	private JTextField txtCurrentSet;
-	private JTextField txtTotalSets;
-	private JTextField txtRepCount;
-	private JTextField txtSetTimeLeft;
-	private JTextField txtTotalTimeLeft;
-	private JTextField txtNext;
-	private JTextField txtWorkout;
-	private JButton	btnPreview;
-	private JComboBox cbName;
-	private JComboBox cbSets;
-	private JComboBox cbReps;
-	private JComboBox cbBetweenMin;
-	private JComboBox cbBetweenSec;
-	private JComboBox cbAfterMin;
-	private JComboBox cbAfterSec;
-	private CardLayout cardlayout = new CardLayout();
-	private JPanel cards = new JPanel(cardlayout);
-	private ImageIcon dialogIcon;
-	private Workout newWorkout;
-	private Workout[] workouts = new Workout[50];		//Stores the array of Workout objects, creating a "workout list".
-	private String workoutName = new String();
+	private JFrame 		frmDrillSergeant;
+	private Preview 	frmPreview = new Preview();
+	private JList 		listWorkout;
+	private JTextField 	txtCurrent;
+	private JTextField 	txtCurrentSet;
+	private JTextField 	txtTotalSets;
+	private JTextField 	txtRepCount;
+	private JTextField 	txtSetTimeLeft;
+	private JTextField 	txtTotalTimeLeft;
+	private JTextField 	txtNext;
+	private JTextField 	txtWorkout;
+	private JButton		btnPreview;
+	private JComboBox 	cbName;
+	private JComboBox 	cbSets;
+	private JComboBox 	cbReps;
+	private JComboBox 	cbBetweenMin;
+	private JComboBox 	cbBetweenSec;
+	private JComboBox 	cbAfterMin;
+	private JComboBox 	cbAfterSec;
+	private CardLayout 	cardlayout = new CardLayout();
+	private JPanel 		cards = new JPanel(cardlayout);
+	private ImageIcon 	dialogIcon;
+	private Workout 	newWorkout;
+	private Workout[] 	workouts = new Workout[50];		//Stores the array of Workout objects, creating a "workout list".
+	private String 		workoutName = new String();
 	
 	//************************************************************
 	// main
@@ -108,20 +108,13 @@ public class Drill_Sergeant {
 			}
 		});
 	}
+	
 
 	//************************************************************
-	// Drill_Sergeant [CONSTRUCTOR]
-	//		Create the application.
-	//************************************************************
-	public Drill_Sergeant() {
-		initialize();
-	}
-
-	//************************************************************
-	// initialize
+	// Drill_Sergeant
 	//		Initialize the contents of the frame.
 	//************************************************************
-	private void initialize() {
+	public Drill_Sergeant() {
 		//Main Application Frame
 		frmDrillSergeant = new JFrame();
 		frmDrillSergeant.setName("DrillSergeant");
@@ -132,13 +125,13 @@ public class Drill_Sergeant {
 		frmDrillSergeant.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmDrillSergeant.getContentPane().setLayout(null);
 		
-		//The main card panel containing all of the cards in the program.
+		//The main card panel containing all of the "cards" (screens) in the main application frame.
 		cards.setBounds(0, 0, 514, 551);
 		frmDrillSergeant.getContentPane().add(cards);
 		
-		//-------------------------------------------------------------------------------------------------------------
+		//=============================================================================================================
 		// Card 1 - Title Screen
-		//-------------------------------------------------------------------------------------------------------------
+		//=============================================================================================================
 		JPanel card1 = new JPanel();
 		card1.setBackground(UIManager.getColor("Tree.dropLineColor"));
 		cards.add(card1, "card1");
@@ -160,7 +153,7 @@ public class Drill_Sergeant {
 		btnOpen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					callParser("config/myworkouts.xml");
+					parseXML("config/myworkouts.xml");
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -221,9 +214,14 @@ public class Drill_Sergeant {
 		btnSettings.setBounds(277, 458, 132, 74);
 		card1.add(btnSettings);
 		
-		//-------------------------------------------------------------------------------------------------------------
+		JLabel label = new JLabel("");
+		label.setIcon(new ImageIcon(Drill_Sergeant.class.getResource("/ui/resources/textureAlum.jpg")));
+		label.setBounds(0, 0, 514, 551);
+		card1.add(label);
+		
+		//=============================================================================================================
 		// Card 2 - Select Workout
-		//-------------------------------------------------------------------------------------------------------------
+		//=============================================================================================================
 		JPanel card2 = new JPanel();
 		card2.setLayout(null);
 		cards.add(card2, "card2");
@@ -301,32 +299,12 @@ public class Drill_Sergeant {
 		btnBack.setBounds(10, 505, 100, 35);
 		card2.add(btnBack);
 		
-		//-------------------------------------------------------------------------------------------------------------
+		//=============================================================================================================
 		// Card 3 - Edit Workout
-		//-------------------------------------------------------------------------------------------------------------
+		//=============================================================================================================
 		JPanel card3 = new JPanel();
 		cards.add(card3, "card3");
 		card3.setLayout(null);
-		
-		//-------------
-		// Buttons
-		//-------------
-		JButton btnCancel = new JButton("Cancel");
-		btnCancel.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int choice = JOptionPane.showConfirmDialog(cards, "Are you sure you want to cancel? All work will be lost.", "Cancel", JOptionPane.YES_NO_OPTION);
-				if (choice == JOptionPane.YES_OPTION) {
-					resetEditScreen();
-					swapView("card1");
-				} else {
-					//Do nothing except close dialog box.
-				}
-			}
-		});
-		btnCancel.setIcon(new ImageIcon(Drill_Sergeant.class.getResource("/ui/resources/dialog-cancel-3.png")));
-		btnCancel.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		btnCancel.setBounds(10, 439, 132, 74);
-		card3.add(btnCancel);
 		
 		//-------------
 		// Borders
@@ -340,6 +318,7 @@ public class Drill_Sergeant {
 		//-------------
 		// Combo Boxes
 		//-------------
+		//Name
 		cbName = new JComboBox();
 		cbName.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -361,6 +340,7 @@ public class Drill_Sergeant {
 		cbName.setBounds(78, 96, 258, 34);
 		panelTitleBorderCard3.add(cbName);
 		
+		//Sets
 		cbSets = new JComboBox();
 		cbSets.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -380,12 +360,14 @@ public class Drill_Sergeant {
 		cbSets.setBounds(212, 160, 50, 20);
 		panelTitleBorderCard3.add(cbSets);
 		
+		//Reps
 		cbReps = new JComboBox();
 		cbReps.setModel(new DefaultComboBoxModel(new String[] {"5", "10", "15", "20", "25", "30", "35", "40", "45", "50"}));
 		cbReps.setEditable(true);
 		cbReps.setBounds(212, 219, 50, 20);
 		panelTitleBorderCard3.add(cbReps);
 		
+		//Rest time between sets
 		cbBetweenMin = new JComboBox();
 		cbBetweenMin.setModel(new DefaultComboBoxModel(new String[] {"0", "1", "2", "3", "4", "5"}));
 		cbBetweenMin.setEditable(true);
@@ -400,6 +382,7 @@ public class Drill_Sergeant {
 		cbBetweenSec.setBounds(282, 281, 40, 20);
 		panelTitleBorderCard3.add(cbBetweenSec);
 		
+		//Rest time after exercise
 		cbAfterMin = new JComboBox();
 		cbAfterMin.setModel(new DefaultComboBoxModel(new String[] {"0", "1", "2", "3", "4", "5"}));
 		cbAfterMin.setEditable(true);
@@ -420,6 +403,7 @@ public class Drill_Sergeant {
 		lblNameOfWorkout.setBounds(10, 44, 59, 14);
 		panelTitleBorderCard3.add(lblNameOfWorkout);
 		
+		//Workout Name
 		txtWorkout = new JTextField();
 		txtWorkout.setText("My_Workout_A");
 		txtWorkout.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -427,23 +411,27 @@ public class Drill_Sergeant {
 		panelTitleBorderCard3.add(txtWorkout);
 		txtWorkout.setColumns(10);
 		
+		//Exercises
+		JLabel lblExercise = new JLabel("Exercises:");
+		lblExercise.setBounds(10, 105, 58, 14);
+		panelTitleBorderCard3.add(lblExercise);
+		lblExercise.setFont(new Font("Tahoma", Font.BOLD, 12));
+		
+		//Sets
 		JLabel lblSets = new JLabel("Sets:");
 		lblSets.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblSets.setBounds(133, 162, 69, 14);
 		panelTitleBorderCard3.add(lblSets);
 		lblSets.setFont(new Font("Tahoma", Font.BOLD, 12));
 		
+		//Reps/Set
 		JLabel lblNewLabel = new JLabel("Reps/Set:");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel.setBounds(133, 221, 69, 14);
 		panelTitleBorderCard3.add(lblNewLabel);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 12));
 		
-		JLabel lblExercise = new JLabel("Exercises:");
-		lblExercise.setBounds(10, 105, 58, 14);
-		panelTitleBorderCard3.add(lblExercise);
-		lblExercise.setFont(new Font("Tahoma", Font.BOLD, 12));
-		
+		//Rest Time Between Sets
 		JLabel lblTimeBetweenSets = new JLabel("Rest Time Between Sets:");
 		lblTimeBetweenSets.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblTimeBetweenSets.setBounds(43, 281, 159, 14);
@@ -458,16 +446,12 @@ public class Drill_Sergeant {
 		lblBetweenSec.setBounds(326, 284, 16, 14);
 		panelTitleBorderCard3.add(lblBetweenSec);
 		
+		//Rest Time After Exercise
 		JLabel lblRestTime = new JLabel("Rest Time After This Exercise:");
 		lblRestTime.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblRestTime.setBounds(22, 347, 180, 14);
 		panelTitleBorderCard3.add(lblRestTime);
 		lblRestTime.setFont(new Font("Tahoma", Font.BOLD, 12));
-		
-		JLabel lblImageExercise = new JLabel("");
-		lblImageExercise.setIcon(new ImageIcon(Drill_Sergeant.class.getResource("/ui/resources/exerciseIconLarge.png")));
-		lblImageExercise.setBounds(369, 96, 115, 115);
-		panelTitleBorderCard3.add(lblImageExercise);
 		
 		JLabel lblAfterMin = new JLabel("min");
 		lblAfterMin.setBounds(256, 354, 16, 14);
@@ -476,6 +460,14 @@ public class Drill_Sergeant {
 		JLabel lblAfterSec = new JLabel("sec");
 		lblAfterSec.setBounds(326, 354, 16, 14);
 		panelTitleBorderCard3.add(lblAfterSec);
+		
+		//-------------
+		// Images
+		//-------------
+		JLabel lblImageExercise = new JLabel("");
+		lblImageExercise.setIcon(new ImageIcon(Drill_Sergeant.class.getResource("/ui/resources/exerciseIconLarge.png")));
+		lblImageExercise.setBounds(369, 96, 115, 115);
+		panelTitleBorderCard3.add(lblImageExercise);
 		
 		//-------------
 		// Buttons
@@ -508,6 +500,24 @@ public class Drill_Sergeant {
 		btnAdd.setIcon(new ImageIcon(Drill_Sergeant.class.getResource("/ui/resources/edit-add-2_16x16.png")));
 		btnAdd.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		
+		//Cancel
+		JButton btnCancel = new JButton("Cancel");
+		btnCancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int choice = JOptionPane.showConfirmDialog(cards, "Are you sure you want to cancel? All work will be lost.", "Cancel", JOptionPane.YES_NO_OPTION);
+				if (choice == JOptionPane.YES_OPTION) {
+					resetEditScreen();
+					swapView("card1");
+				} else {
+					//Do nothing except close dialog box.
+				}
+			}
+		});
+		btnCancel.setIcon(new ImageIcon(Drill_Sergeant.class.getResource("/ui/resources/dialog-cancel-3.png")));
+		btnCancel.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		btnCancel.setBounds(10, 439, 132, 74);
+		card3.add(btnCancel);
+		
 		//Preview
 		btnPreview = new JButton("Preview");
 		btnPreview.addActionListener(new ActionListener() {
@@ -521,7 +531,7 @@ public class Drill_Sergeant {
 		btnPreview.setBounds(193, 439, 132, 74);
 		card3.add(btnPreview);
 		
-		//Save
+		//Finished
 		JButton btnSave = new JButton("Finished");
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -547,9 +557,9 @@ public class Drill_Sergeant {
 		btnSave.setBounds(372, 439, 132, 74);
 		card3.add(btnSave);
 		
-		//-------------------------------------------------------------------------------------------------------------
+		//=============================================================================================================
 		// Card 4 - Active Workout
-		//-------------------------------------------------------------------------------------------------------------
+		//=============================================================================================================
 		JPanel card4 = new JPanel();
 		cards.add(card4, "card4");
 		card4.setLayout(null);
@@ -696,6 +706,7 @@ public class Drill_Sergeant {
 		//-------------
 		// Images
 		//-------------
+		//Exercise Graphic 1
 		JLabel lblImage1 = new JLabel("");
 		lblImage1.setIcon(new ImageIcon(Drill_Sergeant.class.getResource("/ui/resources/exerciseIcon3.png")));
 		lblImage1.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -703,6 +714,7 @@ public class Drill_Sergeant {
 		lblImage1.setBounds(10, 57, 60, 54);
 		card4.add(lblImage1);
 		
+		//Exercise Graphic 2
 		JLabel lblImage2 = new JLabel("");
 		lblImage2.setIcon(new ImageIcon(Drill_Sergeant.class.getResource("/ui/resources/exerciseIcon3.png")));
 		lblImage2.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -710,6 +722,7 @@ public class Drill_Sergeant {
 		lblImage2.setBounds(71, 57, 60, 54);
 		card4.add(lblImage2);
 		
+		//Exercise Graphic 3
 		JLabel lblImage3 = new JLabel("");
 		lblImage3.setIcon(new ImageIcon(Drill_Sergeant.class.getResource("/ui/resources/exerciseIcon3.png")));
 		lblImage3.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -717,6 +730,7 @@ public class Drill_Sergeant {
 		lblImage3.setBounds(132, 57, 60, 54);
 		card4.add(lblImage3);
 		
+		//Exercise Graphic 4
 		JLabel lblImage4 = new JLabel("");
 		lblImage4.setIcon(new ImageIcon(Drill_Sergeant.class.getResource("/ui/resources/exerciseIcon3.png")));
 		lblImage4.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -724,6 +738,7 @@ public class Drill_Sergeant {
 		lblImage4.setBounds(193, 57, 60, 54);
 		card4.add(lblImage4);
 		
+		//Exercise Graphic 5
 		JLabel lblImage5 = new JLabel("");
 		lblImage5.setIcon(new ImageIcon(Drill_Sergeant.class.getResource("/ui/resources/exerciseIcon3.png")));
 		lblImage5.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -731,6 +746,7 @@ public class Drill_Sergeant {
 		lblImage5.setBounds(254, 57, 60, 54);
 		card4.add(lblImage5);
 		
+		//Exercise Graphic 6
 		JLabel lblImage6 = new JLabel("");
 		lblImage6.setIcon(new ImageIcon(Drill_Sergeant.class.getResource("/ui/resources/exerciseIcon3.png")));
 		lblImage6.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -738,6 +754,7 @@ public class Drill_Sergeant {
 		lblImage6.setBounds(315, 57, 60, 54);
 		card4.add(lblImage6);
 		
+		//Exercise Graphic 7
 		JLabel lblImage7 = new JLabel("");
 		lblImage7.setIcon(new ImageIcon(Drill_Sergeant.class.getResource("/ui/resources/exerciseIcon3.png")));
 		lblImage7.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -745,6 +762,7 @@ public class Drill_Sergeant {
 		lblImage7.setBounds(376, 57, 60, 54);
 		card4.add(lblImage7);
 		
+		//Exercise Graphic 8
 		JLabel lblImage8 = new JLabel("");
 		lblImage8.setIcon(new ImageIcon(Drill_Sergeant.class.getResource("/ui/resources/exerciseIcon3.png")));
 		lblImage8.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -781,9 +799,9 @@ public class Drill_Sergeant {
 		btnRestart.setBounds(10, 503, 120, 37);
 		card4.add(btnRestart);
 		
-		//-------------------------------------------------------------------------------------------------------------
+		//=============================================================================================================
 		// Card 5 - Settings
-		//-------------------------------------------------------------------------------------------------------------
+		//=============================================================================================================
 		JPanel card5 = new JPanel();
 		card5.setName("card5");
 		cards.add(card5, "card5");
@@ -795,6 +813,9 @@ public class Drill_Sergeant {
 		card5.add(panelTitleBorderCard5);
 		panelTitleBorderCard5.setLayout(null);
 		
+		//-------------
+		// Text
+		//-------------
 		JLabel lblSound = new JLabel("Sound:");
 		lblSound.setIcon(new ImageIcon(Drill_Sergeant.class.getResource("/ui/resources/player-volume_32x32.png")));
 		lblSound.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -802,6 +823,10 @@ public class Drill_Sergeant {
 		lblSound.setBounds(113, 29, 88, 44);
 		panelTitleBorderCard5.add(lblSound);
 		
+		//-------------
+		// Buttons
+		//-------------
+		//Sound On/Off radio toggle
 		JRadioButton rdbtnOn = new JRadioButton("On");
 		rdbtnOn.setSelected(true);
 		rdbtnOn.setBounds(216, 40, 39, 23);
@@ -811,6 +836,7 @@ public class Drill_Sergeant {
 		rdbtnOff.setBounds(257, 40, 46, 23);
 		panelTitleBorderCard5.add(rdbtnOff);
 		
+		//Back
 		JButton btnBack_card5 = new JButton("  Back");
 		btnBack_card5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -821,22 +847,32 @@ public class Drill_Sergeant {
 		btnBack_card5.setBounds(41, 494, 100, 35);
 		card5.add(btnBack_card5);
 		
-		//-------------------------------------------------------------------------------------------------------------
+		//=============================================================================================================
 		// Card 6 - Preview
-		//-------------------------------------------------------------------------------------------------------------
+		//=============================================================================================================
 		JPanel card6 = new JPanel();
 		card6.setName("");
 		cards.add(card6, "card6");
 		card6.setLayout(null);
 		
+		//-------------
+		// Borders
+		//-------------
 		JScrollPane scrollExercises = new JScrollPane();
 		scrollExercises.setBorder(new TitledBorder(null, "Preview", TitledBorder.CENTER, TitledBorder.TOP, null, null));
 		scrollExercises.setBounds(10, 30, 494, 380);
 		card6.add(scrollExercises);
-		
+
+		//-------------
+		// Lists
+		//-------------
 		JList listExercises = new JList();
 		scrollExercises.setViewportView(listExercises);
 		
+		//-------------
+		// Buttons
+		//-------------
+		//Back
 		JButton button = new JButton("  Back");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -847,30 +883,33 @@ public class Drill_Sergeant {
 		button.setBounds(10, 444, 132, 74);
 		card6.add(button);
 		
+		//Delete
 		JButton button_1 = new JButton("   Delete");
 		button_1.setIcon(new ImageIcon(Drill_Sergeant.class.getResource("/ui/resources/edit-delete-2.png")));
 		button_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		button_1.setBounds(372, 444, 132, 74);
 		card6.add(button_1);
 		
-		//-------------------------------------------------------------------------------------------------------------
+		//=============================================================================================================
 		// Menu Bar
-		//-------------------------------------------------------------------------------------------------------------
+		//=============================================================================================================
 		JMenuBar menuBar = new JMenuBar();
 		frmDrillSergeant.setJMenuBar(menuBar);
 		
-		JMenu mnFile = new JMenu("File");
-		menuBar.add(mnFile);
+		JMenu mFile = new JMenu("File");
+		menuBar.add(mFile);
 		
-		JMenu mnHelp = new JMenu("Help");
-		menuBar.add(mnHelp);
+		JMenu mHelp = new JMenu("Help");
+		menuBar.add(mHelp);
 		
-		JMenuItem mntmUserGuide = new JMenuItem("User Guide");
-		mnHelp.add(mntmUserGuide);
+		JMenuItem mitemUserGuide = new JMenuItem("User Guide");
+		mHelp.add(mitemUserGuide);
 		
-		JMenuItem mntmAbout = new JMenuItem("About");
-		mnHelp.add(mntmAbout);
-	}
+		JMenuItem mitemAbout = new JMenuItem("About");
+		mHelp.add(mitemAbout);
+	} 
+	//End of initialize()
+	
 	
 	//************************************************************
 	// swapView
@@ -881,6 +920,7 @@ public class Drill_Sergeant {
 	      cardlayout.show(cards, cardName);
 	}
 	
+	
 	//************************************************************
 	// resetEditScreen
 	//		Clear all fields on the Edit Workout screen.
@@ -890,6 +930,7 @@ public class Drill_Sergeant {
 		//TO DO
 		//
 	}
+	
 	
 	//************************************************************
 	// togglePreviewWindow
@@ -904,8 +945,9 @@ public class Drill_Sergeant {
 		}
 	}
 	
+	
 	//************************************************************
-	// print
+	// mdPrint
 	//		Print any string output to a message dialog.
 	//		Param: 	outputString - the string to be displayed in the message box
 	//				component - the component on which to display the message box. 
@@ -915,9 +957,12 @@ public class Drill_Sergeant {
 	}
 	
 	
-	
-	
-	public void callParser(String uri) throws Exception {
+	//************************************************************
+	// parseXML
+	//		Parse the xml file containing data for all the workouts.
+	//		Param: 	uri - the URI of the xml file.
+	//************************************************************
+	public void parseXML(String uri) throws Exception {
     	//Create a "parser factory" for creating SAX parsers
     	SAXParserFactory spfac = SAXParserFactory.newInstance();
 	
@@ -930,9 +975,5 @@ public class Drill_Sergeant {
     	//Finally, tell the parser to parse the input and notify the handler
     	sp.parse(uri, handler);
     	handler.readList();
-    	
-//    	for (int i=0; i < workoutListSize; i++) {
-//    		 handler.getWorkout(i);
-//    	}
 	}  
 }
