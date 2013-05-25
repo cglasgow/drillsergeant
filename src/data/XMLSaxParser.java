@@ -1,4 +1,4 @@
-package data.xml;
+package data;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,45 +13,45 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 
+
 public class XMLSaxParser extends DefaultHandler {
-
-    private Workout workout;
-    private Exercise exercise;
-    private String temp;
+	public Workout workout;
     private ArrayList<Workout> workoutList = new ArrayList<Workout>();
-    
+    private String tempString;
 
-    /*
-     * When the parser encounters plain text (not XML elements),
-     * it calls(this method, which accumulates them in a string buffer
-     */
+    //************************************************************
+  	// characters
+    //		When the parser encounters plain text (not XML elements),
+    //		it calls this method, which accumulates them in a string buffer.
+    //************************************************************
     public void characters(char[] buffer, int start, int length) {
-           temp = new String(buffer, start, length);
+           tempString = new String(buffer, start, length);
     }
    
 
-    /*
-     * Every time the parser encounters the beginning of a new element,
-     * it calls this method, which resets the string buffer
-     */ 
-    public void startElement(String uri, String localName,
-                  String qName, Attributes attributes) throws SAXException {
-           temp = "";
+    //************************************************************
+    // startElement
+    //		Every time the parser encounters the beginning of a new element,
+    //		it calls this method, which resets the string buffer and parses
+    //		through the element's attributes.
+	//************************************************************
+    public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+           tempString = "";
+           
            if (qName.equalsIgnoreCase("Workout")) {
-        	   workout = new Workout();
+        	   workout = new Workout("nameNotYetKnown");
         	   workout.setID(attributes.getValue("id"));
         	   workout.setName(attributes.getValue("name"));
         	   workout.setDateCreated(attributes.getValue("dateCreated"));
         	   workout.setLastModified(attributes.getValue("lastModified"));
         	   workout.setLengthInSecs(attributes.getValue("lengthInSecs"));
            } else if (qName.equalsIgnoreCase("Exercise")) {
-        	   exercise = new Exercise();
-        	   exercise.setPos(attributes.getValue("pos"));
+        	   Exercise exercise = new Exercise();
+        	   exercise.setPosition(Integer.parseInt(attributes.getValue("pos")));
         	   exercise.setName(attributes.getValue("name"));
         	   exercise.setSets(attributes.getValue("sets"));
-        	   exercise.setReps(attributes.getValue("reps"));
-        	   exercise.setRestBetween(attributes.getValue("restBetween"));
-        	   exercise.setRestAfter(attributes.getValue("restAfter"));
+        	   exercise.setRestBetween(attributes.getValue("restBetweenMin"), attributes.getValue("restBetweenSec"));
+        	   exercise.setRestAfter(attributes.getValue("restAfterMin"), attributes.getValue("restAfterSec"));
         	   workout.addExercise(exercise);
            }
     }

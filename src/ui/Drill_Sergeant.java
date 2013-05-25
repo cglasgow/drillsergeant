@@ -57,7 +57,7 @@ import javax.xml.parsers.SAXParserFactory;
 
 import data.Exercise;
 import data.Workout;
-import data.xml.XMLSaxParser;
+import data.XMLSaxParser;
 
 public class Drill_Sergeant {
 
