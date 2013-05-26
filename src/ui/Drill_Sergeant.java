@@ -347,8 +347,8 @@ public class Drill_Sergeant {
 				if ((String)cbSets.getSelectedItem() == "1") {
 					cbBetweenMin.setEnabled(false);
 					cbBetweenSec.setEnabled(false);
-					cbBetweenMin.setSelectedItem(0);
-					cbBetweenSec.setSelectedItem(0);
+					cbBetweenMin.setSelectedItem("0");
+					cbBetweenSec.setSelectedItem("0");
 				} else {
 					cbBetweenMin.setEnabled(true);
 					cbBetweenSec.setEnabled(true);
