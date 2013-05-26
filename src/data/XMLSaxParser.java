@@ -12,12 +12,15 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import ui.Drill_Sergeant;
+
 
 
 public class XMLSaxParser extends DefaultHandler {
 	public Workout workout;
     private ArrayList<Workout> workoutList = new ArrayList<Workout>();
     private String tempString;
+    private ArrayList<String> listItems = new ArrayList<String>();
 
     //************************************************************
   	// characters
@@ -72,8 +75,14 @@ public class XMLSaxParser extends DefaultHandler {
            System.out.println("Number of workouts in file: '" + workoutList.size()  + "'.");
            Iterator<Workout> it = workoutList.iterator();
            while (it.hasNext()) {
-                  System.out.println(it.next().toString());
+                  String listItem = it.next().toString();
+                  listItems.add(listItem);
+                  System.out.println(listItem);
            }
+    }
+    
+    public ArrayList<String> getListItems() {
+    	return listItems;
     }
     
     public ArrayList<Workout> getWorkoutList() {

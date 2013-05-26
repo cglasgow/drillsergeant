@@ -975,5 +975,17 @@ public class Drill_Sergeant {
     	//Finally, tell the parser to parse the input and notify the handler
     	sp.parse(uri, handler);
     	handler.readList();
-	}  
+    	displayWorkoutList(handler);
+	}
+	
+	//************************************************************
+	// displayWorkoutList
+	//		Display the list of workouts parsed from the xml file
+	//		in the list object on the Workout Select screen.
+	//************************************************************
+	public void displayWorkoutList(XMLSaxParser handler) {
+		ArrayList<String> listItems = new ArrayList<String>(handler.getListItems());
+		listWorkout.setListData(listItems.toArray());
+	}
+	
 }
