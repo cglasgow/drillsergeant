@@ -20,7 +20,7 @@ public class Workout {
 	}
 	
 	//------------------------------
-	//Workout Manipulation Methods
+	//Workout-Related Methods
 	//------------------------------
 	public String getID() {
 		return id;
@@ -69,7 +69,7 @@ public class Workout {
 	}
 	
 	//------------------------------
-	//Exercise-Manipulation Methods
+	//Exercise-Reated Methods
 	//------------------------------
 	public void addExercise(Exercise theExercise) {
 		if (currentExerciseIndex < 20) {
@@ -86,6 +86,14 @@ public class Workout {
 		exercises.remove(index);
 	}
 	
+	public int getExerciseListSize() {
+		return exercises.size();
+	}
+	
+	public Exercise getExercise(int index) {
+		return exercises.get(index);
+	}
+	
 	//------------------------------
 	//Misc.
 	//------------------------------
@@ -93,9 +101,9 @@ public class Workout {
 		StringBuffer sb = new StringBuffer();
 		sb.append("Name: " + getName());
 		sb.append(" - ");
-		sb.append("Total Length: " + (Integer.parseInt(getLengthInSecs()) / 60) + " minutes");
+		sb.append("Date Created: " + getDateCreated());
 		sb.append(" - ");
-		sb.append("DateCreated: " + getDateCreated());
+		sb.append("Last Modified: " + getLastModified());
 		return sb.toString();
 	}
 	

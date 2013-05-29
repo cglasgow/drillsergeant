@@ -87,6 +87,8 @@ public class Drill_Sergeant {
 	private Workout[] 	workouts = new Workout[50];		//Stores the array of Workout objects, creating a "workout list".
 	private String 		workoutName = new String();
 	
+	private XMLSaxParser handler;
+	
 	//************************************************************
 	// main
 	//		Launch the application.
@@ -265,6 +267,12 @@ public class Drill_Sergeant {
 		//-------------
 		//Open
 		JButton btnOpen2 = new JButton("   Open");
+		btnOpen2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int selectedIndex = listWorkout.getSelectedIndex();
+				selectWorkout(handler, selectedIndex, "btnOpen2");
+			}
+		});
 		btnOpen2.setIcon(new ImageIcon(Drill_Sergeant.class.getResource("/ui/resources/document-open-folder_32x32.png")));
 		btnOpen2.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		btnOpen2.setBounds(10, 408, 132, 74);
@@ -283,6 +291,12 @@ public class Drill_Sergeant {
 		
 		//Edit
 		JButton btnEdit = new JButton("   Edit");
+		btnEdit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int selectedIndex = listWorkout.getSelectedIndex();
+				selectWorkout(handler, selectedIndex, "btnEdit");
+			}
+		});
 		btnEdit.setIcon(new ImageIcon(Drill_Sergeant.class.getResource("/ui/resources/edit-4.png")));
 		btnEdit.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		btnEdit.setBounds(192, 408, 132, 74);
@@ -970,7 +984,7 @@ public class Drill_Sergeant {
     	SAXParser sp = spfac.newSAXParser();
 	
     	//Create an instance of this class; it defines all the handler methods
-    	XMLSaxParser handler = new XMLSaxParser();
+    	handler = new XMLSaxParser();
 	
     	//Finally, tell the parser to parse the input and notify the handler
     	sp.parse(uri, handler);
@@ -986,6 +1000,31 @@ public class Drill_Sergeant {
 	public void displayWorkoutList(XMLSaxParser handler) {
 		ArrayList<String> listItems = new ArrayList<String>(handler.getListItems());
 		listWorkout.setListData(listItems.toArray());
+	}
+	
+	//************************************************************
+	// selectWorkout
+	//		This method is called when the user highlights a workout
+	//		from the list of workouts and presses either the "Open"
+	//		or "Edit" button.
+	//************************************************************
+	public void selectWorkout(XMLSaxParser theHandler, int index, String callingBtnName) {
+		System.out.println(index);
+		newWorkout = new Workout(""); 				//Create a new empty workout so the selected saved workout can be copied into it.
+		newWorkout = theHandler.getWorkout(index);	//Copy the saved workout into the new workout.
+		System.out.println(newWorkout.toString());
+		txtWorkout.setText(newWorkout.getName());
+		
+		for (int i=0; i<newWorkout.getExerciseListSize(); i++) {
+			int previewIndex = frmPreview.add(newWorkout.getExercise(i));
+			newWorkout.getExercise(i).setPosition(previewIndex);
+		}
+		
+		if (callingBtnName == "btnOpen2") {
+			swapView("card4");
+		} else if (callingBtnName == "btnEdit") {
+			swapView("card3");
+		}
 	}
 	
 }

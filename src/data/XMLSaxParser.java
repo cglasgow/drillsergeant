@@ -47,7 +47,7 @@ public class XMLSaxParser extends DefaultHandler {
         	   workout.setName(attributes.getValue("name"));
         	   workout.setDateCreated(attributes.getValue("dateCreated"));
         	   workout.setLastModified(attributes.getValue("lastModified"));
-        	   workout.setLengthInSecs(attributes.getValue("lengthInSecs"));
+        	  // workout.setLengthInSecs(attributes.getValue("lengthInSecs"));
            } else if (qName.equalsIgnoreCase("Exercise")) {
         	   Exercise exercise = new Exercise();
         	   exercise.setPosition(Integer.parseInt(attributes.getValue("pos")));
