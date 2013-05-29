@@ -86,7 +86,6 @@ public class Drill_Sergeant {
 	private Workout 	newWorkout;
 	private Workout[] 	workouts = new Workout[50];		//Stores the array of Workout objects, creating a "workout list".
 	private String 		workoutName = new String();
-	
 	private XMLSaxParser handler;
 	
 	//************************************************************
@@ -1009,6 +1008,7 @@ public class Drill_Sergeant {
 	//		or "Edit" button.
 	//************************************************************
 	public void selectWorkout(XMLSaxParser theHandler, int index, String callingBtnName) {
+		//Load the workout.
 		System.out.println(index);
 		newWorkout = new Workout(""); 				//Create a new empty workout so the selected saved workout can be copied into it.
 		newWorkout = theHandler.getWorkout(index);	//Copy the saved workout into the new workout.
@@ -1020,6 +1020,7 @@ public class Drill_Sergeant {
 			newWorkout.getExercise(i).setPosition(previewIndex);
 		}
 		
+		//Switch to either the "Active Workout" or "Edit Workout"
 		if (callingBtnName == "btnOpen2") {
 			swapView("card4");
 		} else if (callingBtnName == "btnEdit") {
