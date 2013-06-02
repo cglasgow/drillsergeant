@@ -348,9 +348,9 @@ public class Drill_Sergeant {
 				}
 			}
 		});
-		cbName.setModel(new DefaultComboBoxModel(new String[] {"--------------Select an exercise to add--------------", "**Custom**", "Crunches", "Lunges", "Pushups", "Pullups", "Situps"}));
+		cbName.setModel(new DefaultComboBoxModel(new String[] {"--------------------------Select an exercise to add-------------------------", "**Custom**", "Crunches", "Lunges", "Pushups", "Pullups", "Situps"}));
 		cbName.setName("");
-		cbName.setBounds(78, 96, 258, 34);
+		cbName.setBounds(78, 96, 352, 34);
 		panelTitleBorderCard3.add(cbName);
 		
 		//Sets
@@ -475,14 +475,6 @@ public class Drill_Sergeant {
 		panelTitleBorderCard3.add(lblAfterSec);
 		
 		//-------------
-		// Images
-		//-------------
-		JLabel lblImageExercise = new JLabel("");
-		lblImageExercise.setIcon(new ImageIcon(Drill_Sergeant.class.getResource("/ui/resources/exerciseIconLarge.png")));
-		lblImageExercise.setBounds(369, 96, 115, 115);
-		panelTitleBorderCard3.add(lblImageExercise);
-		
-		//-------------
 		// Buttons
 		//-------------
 		//Add
@@ -592,17 +584,16 @@ public class Drill_Sergeant {
 		JLabel lblCurrentExercise = new JLabel("Current:");
 		lblCurrentExercise.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblCurrentExercise.setHorizontalAlignment(SwingConstants.LEFT);
-		lblCurrentExercise.setBounds(10, 118, 52, 17);
+		lblCurrentExercise.setBounds(10, 72, 52, 17);
 		card4.add(lblCurrentExercise);
 		
 		txtCurrent = new JTextField();
-		txtCurrent.setHorizontalAlignment(SwingConstants.CENTER);
-		txtCurrent.setEnabled(false);
+		txtCurrent.setHorizontalAlignment(SwingConstants.LEFT);
 		txtCurrent.setForeground(new Color(0, 153, 0));
-		txtCurrent.setFont(new Font("Tahoma", Font.BOLD, 14));
+		txtCurrent.setFont(new Font("Tahoma", Font.BOLD, 24));
 		txtCurrent.setText("PULL-UPS");
 		txtCurrent.setEditable(false);
-		txtCurrent.setBounds(65, 116, 175, 20);
+		txtCurrent.setBounds(75, 48, 429, 57);
 		card4.add(txtCurrent);
 		txtCurrent.setColumns(10);
 		
@@ -610,25 +601,25 @@ public class Drill_Sergeant {
 		JLabel lblUpNext = new JLabel("Up Next:");
 		lblUpNext.setHorizontalAlignment(SwingConstants.LEFT);
 		lblUpNext.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblUpNext.setBounds(264, 118, 60, 17);
+		lblUpNext.setBounds(12, 123, 60, 17);
 		card4.add(lblUpNext);
 		
 		txtNext = new JTextField();
-		txtNext.setHorizontalAlignment(SwingConstants.CENTER);
+		txtNext.setHorizontalAlignment(SwingConstants.LEFT);
 		txtNext.setEnabled(false);
 		txtNext.setText("CRUNCHES");
 		txtNext.setForeground(new Color(102, 102, 102));
 		txtNext.setFont(new Font("Tahoma", Font.BOLD, 14));
 		txtNext.setEditable(false);
 		txtNext.setColumns(10);
-		txtNext.setBounds(322, 116, 175, 20);
+		txtNext.setBounds(75, 116, 253, 32);
 		card4.add(txtNext);
 		
 		//Current Set
 		JLabel lblSet = new JLabel("Set:");
 		lblSet.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblSet.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblSet.setBounds(132, 174, 46, 14);
+		lblSet.setBounds(117, 192, 46, 14);
 		card4.add(lblSet);
 		
 		txtCurrentSet = new JTextField();
@@ -637,14 +628,14 @@ public class Drill_Sergeant {
 		txtCurrentSet.setFont(new Font("Tahoma", Font.BOLD, 24));
 		txtCurrentSet.setHorizontalAlignment(SwingConstants.CENTER);
 		txtCurrentSet.setText("1");
-		txtCurrentSet.setBounds(184, 159, 52, 37);
+		txtCurrentSet.setBounds(173, 167, 60, 57);
 		card4.add(txtCurrentSet);
 		txtCurrentSet.setColumns(10);
 		
 		JLabel lblOf = new JLabel("of");
 		lblOf.setHorizontalAlignment(SwingConstants.CENTER);
 		lblOf.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblOf.setBounds(246, 161, 20, 27);
+		lblOf.setBounds(248, 182, 20, 27);
 		card4.add(lblOf);
 		
 		//Total Sets
@@ -655,13 +646,13 @@ public class Drill_Sergeant {
 		txtTotalSets.setText("5");
 		txtTotalSets.setEditable(false);
 		txtTotalSets.setColumns(10);
-		txtTotalSets.setBounds(276, 159, 52, 37);
+		txtTotalSets.setBounds(279, 167, 60, 57);
 		card4.add(txtTotalSets);
 		
 		//Rep Count
 		JLabel lblRepCount = new JLabel("Rep Count:");
 		lblRepCount.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblRepCount.setBounds(89, 219, 80, 20);
+		lblRepCount.setBounds(89, 233, 80, 20);
 		card4.add(lblRepCount);
 		
 		txtRepCount = new JTextField();
@@ -670,14 +661,14 @@ public class Drill_Sergeant {
 		txtRepCount.setText("10");
 		txtRepCount.setFont(new Font("Tahoma", Font.BOLD, 48));
 		txtRepCount.setEditable(false);
-		txtRepCount.setBounds(44, 250, 155, 52);
+		txtRepCount.setBounds(44, 253, 155, 52);
 		card4.add(txtRepCount);
 		txtRepCount.setColumns(10);
 		
 		//Set Time Left
 		JLabel lblNextSetStarts = new JLabel("Next Set Starts In:");
 		lblNextSetStarts.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNextSetStarts.setBounds(337, 219, 120, 20);
+		lblNextSetStarts.setBounds(337, 233, 120, 20);
 		card4.add(lblNextSetStarts);
 		
 		txtSetTimeLeft = new JTextField();
@@ -687,7 +678,7 @@ public class Drill_Sergeant {
 		txtSetTimeLeft.setFont(new Font("Tahoma", Font.BOLD, 48));
 		txtSetTimeLeft.setEditable(false);
 		txtSetTimeLeft.setColumns(10);
-		txtSetTimeLeft.setBounds(317, 250, 155, 52);
+		txtSetTimeLeft.setBounds(317, 253, 155, 52);
 		card4.add(txtSetTimeLeft);
 		
 		//Full Workout Progress
@@ -715,73 +706,6 @@ public class Drill_Sergeant {
 		txtTotalTimeLeft.setBounds(376, 380, 96, 26);
 		card4.add(txtTotalTimeLeft);
 		txtTotalTimeLeft.setColumns(10);
-		
-		//-------------
-		// Images
-		//-------------
-		//Exercise Graphic 1
-		JLabel lblImage1 = new JLabel("");
-		lblImage1.setIcon(new ImageIcon(Drill_Sergeant.class.getResource("/ui/resources/exerciseIcon3.png")));
-		lblImage1.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		lblImage1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblImage1.setBounds(10, 57, 60, 54);
-		card4.add(lblImage1);
-		
-		//Exercise Graphic 2
-		JLabel lblImage2 = new JLabel("");
-		lblImage2.setIcon(new ImageIcon(Drill_Sergeant.class.getResource("/ui/resources/exerciseIcon3.png")));
-		lblImage2.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		lblImage2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblImage2.setBounds(71, 57, 60, 54);
-		card4.add(lblImage2);
-		
-		//Exercise Graphic 3
-		JLabel lblImage3 = new JLabel("");
-		lblImage3.setIcon(new ImageIcon(Drill_Sergeant.class.getResource("/ui/resources/exerciseIcon3.png")));
-		lblImage3.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		lblImage3.setHorizontalAlignment(SwingConstants.CENTER);
-		lblImage3.setBounds(132, 57, 60, 54);
-		card4.add(lblImage3);
-		
-		//Exercise Graphic 4
-		JLabel lblImage4 = new JLabel("");
-		lblImage4.setIcon(new ImageIcon(Drill_Sergeant.class.getResource("/ui/resources/exerciseIcon3.png")));
-		lblImage4.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		lblImage4.setHorizontalAlignment(SwingConstants.CENTER);
-		lblImage4.setBounds(193, 57, 60, 54);
-		card4.add(lblImage4);
-		
-		//Exercise Graphic 5
-		JLabel lblImage5 = new JLabel("");
-		lblImage5.setIcon(new ImageIcon(Drill_Sergeant.class.getResource("/ui/resources/exerciseIcon3.png")));
-		lblImage5.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		lblImage5.setHorizontalAlignment(SwingConstants.CENTER);
-		lblImage5.setBounds(254, 57, 60, 54);
-		card4.add(lblImage5);
-		
-		//Exercise Graphic 6
-		JLabel lblImage6 = new JLabel("");
-		lblImage6.setIcon(new ImageIcon(Drill_Sergeant.class.getResource("/ui/resources/exerciseIcon3.png")));
-		lblImage6.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		lblImage6.setHorizontalAlignment(SwingConstants.CENTER);
-		lblImage6.setBounds(315, 57, 60, 54);
-		card4.add(lblImage6);
-		
-		//Exercise Graphic 7
-		JLabel lblImage7 = new JLabel("");
-		lblImage7.setIcon(new ImageIcon(Drill_Sergeant.class.getResource("/ui/resources/exerciseIcon3.png")));
-		lblImage7.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		lblImage7.setHorizontalAlignment(SwingConstants.CENTER);
-		lblImage7.setBounds(376, 57, 60, 54);
-		card4.add(lblImage7);
-		
-		//Exercise Graphic 8
-		JLabel lblImage8 = new JLabel("");
-		lblImage8.setIcon(new ImageIcon(Drill_Sergeant.class.getResource("/ui/resources/exerciseIcon3.png")));
-		lblImage8.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		lblImage8.setHorizontalAlignment(SwingConstants.CENTER);
-		lblImage8.setBounds(437, 57, 60, 54);
-		card4.add(lblImage8);
 		
 		//-------------
 		// Progress Bars
