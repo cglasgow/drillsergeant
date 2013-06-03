@@ -86,7 +86,7 @@ public class Drill_Sergeant {
 	private Workout 	newWorkout;
 	private Workout[] 	workouts = new Workout[50];		//Stores the array of Workout objects, creating a "workout list".
 	private String 		workoutName = new String();
-	private XMLSaxParser handler;
+	private XMLSaxParser handler = new XMLSaxParser();
 	
 	//************************************************************
 	// main
@@ -154,7 +154,7 @@ public class Drill_Sergeant {
 		btnOpen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					parseXML("config/myworkouts.xml");
+					parseXML("config/user_config.xml");
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -549,8 +549,11 @@ public class Drill_Sergeant {
 						null, options, options[0]);
 				
 				if (choice == JOptionPane.NO_OPTION) {
+					newWorkout.save(handler);
+					newWorkout.load();
 					swapView("card4");
 				} else if (choice == JOptionPane.YES_OPTION) {
+					newWorkout.save(handler);
 					swapView("card1");
 				} else if (choice == JOptionPane.CANCEL_OPTION) {
 					//do nothing except close dialog box
@@ -907,7 +910,7 @@ public class Drill_Sergeant {
     	SAXParser sp = spfac.newSAXParser();
 	
     	//Create an instance of this class; it defines all the handler methods
-    	handler = new XMLSaxParser();
+    	//handler = new XMLSaxParser();
 	
     	//Finally, tell the parser to parse the input and notify the handler
     	sp.parse(uri, handler);

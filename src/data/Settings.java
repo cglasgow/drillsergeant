@@ -3,16 +3,17 @@ package data;
 import java.io.*;
 
 public class Settings {
-	private boolean soundEnabled = true;
+	private boolean isSoundEnabled = true;
 	
-	public void setSound(boolean status) {
-		if (status == true) {
-			status = false;
+	public void setSound(String status) {
+		if (status == "on") {
+			isSoundEnabled = true;
 		} else {
-			status = true;
+			isSoundEnabled = false;
 		}
-		//
-		//TO DO: Add code for writing sound status to settings.ini
-		//
+	}
+	
+	public boolean getSound() {
+		return isSoundEnabled;
 	}
 }

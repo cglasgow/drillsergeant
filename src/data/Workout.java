@@ -62,6 +62,17 @@ public class Workout {
 		this.lengthInSecs = lengthInSecs;
 	}
 	
+	public void save(XMLSaxParser theHandler) {
+		theHandler.addToWorkoutList(this);
+		//Create a new XML file with the updated data.
+		XMLWriter theXMLWriter = new XMLWriter();
+		theXMLWriter.writeXML(theHandler);
+	}
+	
+	public void load() {} {
+		
+	}
+	
 	public void run() {
 		
 		//TO DO:  THIS METHOD WILL CONTAIN THE CODE THAT ACTIVATES A WORKOUT AND RUNS THROUGH IT.

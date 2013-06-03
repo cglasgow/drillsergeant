@@ -17,7 +17,8 @@ import ui.Drill_Sergeant;
 
 
 public class XMLSaxParser extends DefaultHandler {
-	public Workout workout;
+	private Workout workout;
+	public Settings settings;
     private ArrayList<Workout> workoutList = new ArrayList<Workout>();
     private String tempString;
     private ArrayList<String> listItems = new ArrayList<String>();
@@ -56,6 +57,10 @@ public class XMLSaxParser extends DefaultHandler {
         	   exercise.setRestBetween(attributes.getValue("restBetweenMin"), attributes.getValue("restBetweenSec"));
         	   exercise.setRestAfter(attributes.getValue("restAfterMin"), attributes.getValue("restAfterSec"));
         	   workout.addExercise(exercise);
+           } else if (qName.equalsIgnoreCase("Settings")) {
+        	   settings = new Settings();
+           } else if (qName.equalsIgnoreCase("Sound")) {
+        	   settings.setSound(attributes.getValue("value"));
            }
     }
 
@@ -65,10 +70,10 @@ public class XMLSaxParser extends DefaultHandler {
     public void endElement(String uri, String localName, String qName)
                   throws SAXException {
 
-           if (qName.equalsIgnoreCase("Workout")) {
-                  // add it to the list
-                  workoutList.add(workout);
-           }
+    	if (qName.equalsIgnoreCase("Workout")) {
+    		// add it to the list
+    		workoutList.add(workout);
+    	}
     }
 
     public void readList() {
@@ -89,11 +94,19 @@ public class XMLSaxParser extends DefaultHandler {
         return workoutList;
     }
     
+    public void addToWorkoutList(Workout theWorkout) {
+    	workoutList.add(theWorkout);
+    }
+    
     public Workout getWorkout(int arrayIndex) {
         return workoutList.get(arrayIndex);
     }
     
     public int getWorkoutListSize() {
         return workoutList.size();
+    }
+    
+    public Settings getSettings() {
+    	return settings;
     }
 }

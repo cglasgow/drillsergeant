@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<UserConfig>
+    <Workouts>
+        <Workout dateCreated="051813" id="0" lastModified="051813" name="Workout 1">
+            <Exercise name="Pushups" pos="1" reps="1" restAfterMin="1" restAfterSec="0" restBetweenMin="2" restBetweenSec="0" sets="4"/>
+            <Exercise name="Pullups" pos="2" reps="2" restAfterMin="1" restAfterSec="0" restBetweenMin="2" restBetweenSec="0" sets="2"/>
+            <Exercise name="Crunches" pos="3" reps="3" restAfterMin="1" restAfterSec="0" restBetweenMin="2" restBetweenSec="0" sets="3"/>
+        </Workout>
+        <Workout dateCreated="051813" id="1" lastModified="051813" name="Workout 2">
+            <Exercise name="Pushups" pos="1" reps="1" restAfterMin="1" restAfterSec="0" restBetweenMin="2" restBetweenSec="0" sets="4"/>
+            <Exercise name="Pullups" pos="2" reps="2" restAfterMin="1" restAfterSec="0" restBetweenMin="2" restBetweenSec="0" sets="2"/>
+            <Exercise name="Crunches" pos="3" reps="3" restAfterMin="1" restAfterSec="0" restBetweenMin="2" restBetweenSec="0" sets="3"/>
+        </Workout>
+	</Workouts>
+    <Settings>
+        <Sound value="off"/>
+    </Settings>
+</UserConfig>
