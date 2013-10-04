@@ -87,6 +87,7 @@ public class Drill_Sergeant {
 	private Workout[] 	workouts = new Workout[50];		//Stores the array of Workout objects, creating a "workout list".
 	private String 		workoutName = new String();
 	private XMLSaxParser handler = new XMLSaxParser();
+	private Boolean		isXMLParsed = false;
 	
 	//************************************************************
 	// main
@@ -154,7 +155,10 @@ public class Drill_Sergeant {
 		btnOpen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					parseXML("config/user_config.xml");
+					if (isXMLParsed == false) {
+						parseXML("config/user_config.xml");
+						isXMLParsed = true;
+					}					
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
