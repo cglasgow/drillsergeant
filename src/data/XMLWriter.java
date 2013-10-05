@@ -118,9 +118,6 @@ public class XMLWriter {
 			DOMSource source = new DOMSource(doc);
 			StreamResult result = new StreamResult(new File("config/user_config.xml"));
 	 
-			// Output to console for testing
-			// StreamResult result = new StreamResult(System.out);
-	 
 			transformer.transform(source, result);
 	 
 			System.out.println("File saved!");

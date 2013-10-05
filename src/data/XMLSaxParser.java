@@ -77,14 +77,15 @@ public class XMLSaxParser extends DefaultHandler {
     }
 
     public void readList() {
-           System.out.println("Number of workouts in file: '" + workoutList.size()  + "'.");
-           Iterator<Workout> it = workoutList.iterator();
-           while (it.hasNext()) {
-                  String listItem = it.next().toString();
-                  listItems.add(listItem);
-                  System.out.println(listItem);
-           }
-    }
+    		listItems.clear();
+           	System.out.println("Number of workouts in file: '" + workoutList.size()  + "'.");
+           	Iterator<Workout> it = workoutList.iterator();
+           	while (it.hasNext()) {
+           		String listItem = it.next().toString();
+           		listItems.add(listItem);
+           		System.out.println(listItem);
+           	}
+	}
     
     public ArrayList<String> getListItems() {
     	return listItems;
@@ -96,6 +97,18 @@ public class XMLSaxParser extends DefaultHandler {
     
     public void addToWorkoutList(Workout theWorkout) {
     	workoutList.add(theWorkout);
+    }
+    
+    public void removeFromWorkoutList(int index) {
+    	System.out.println("workoutList size: " + workoutList.size());
+    	workoutList.remove(index);
+    	System.out.println("workoutList size: " + workoutList.size());
+    }
+    
+    public void clearWorkoutList() {
+    	System.out.println("workoutList size: " + workoutList.size());
+    	workoutList.clear();
+    	System.out.println("workoutList size: " + workoutList.size());
     }
     
     public Workout getWorkout(int arrayIndex) {

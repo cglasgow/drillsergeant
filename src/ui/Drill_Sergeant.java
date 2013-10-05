@@ -17,6 +17,7 @@ import javax.swing.border.BevelBorder;
 import javax.swing.UIManager;
 import javax.swing.JScrollPane;
 import javax.swing.border.TitledBorder;
+import javax.swing.DefaultListModel;
 import javax.swing.JSeparator;
 import javax.swing.JComboBox;
 import javax.swing.JSpinner;
@@ -58,6 +59,7 @@ import javax.xml.parsers.SAXParserFactory;
 import data.Exercise;
 import data.Workout;
 import data.XMLSaxParser;
+import data.XMLWriter;
 
 public class Drill_Sergeant {
 
@@ -88,6 +90,7 @@ public class Drill_Sergeant {
 	private String 		workoutName = new String();
 	private XMLSaxParser handler = new XMLSaxParser();
 	private Boolean		isXMLParsed = false;
+	private DefaultListModel listModel = new DefaultListModel();
 	
 	//************************************************************
 	// main
@@ -158,6 +161,7 @@ public class Drill_Sergeant {
 					if (isXMLParsed == false) {
 						parseXML("config/user_config.xml");
 						isXMLParsed = true;
+						displayWorkoutList(handler);
 					}					
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
@@ -255,15 +259,16 @@ public class Drill_Sergeant {
 		listWorkout.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listWorkout.setFont(new Font("Cordia New", Font.PLAIN, 16));
 		listWorkout.setBorder(new BevelBorder(BevelBorder.LOWERED, UIManager.getColor("InternalFrame.resizeIconShadow"), UIManager.getColor("InternalFrame.borderLight"), null, null));
-		listWorkout.setModel(new AbstractListModel() {
-			String[] values = new String[] {"LIST ITEM 1", "LIST ITEM 2", "LIST ITEM 3", "LIST ITEM 4", "LIST ITEM 5", "LIST ITEM 6", "LIST ITEM 7", "LIST ITEM 8", "LIST ITEM 9", "LIST ITEM 10", "LIST ITEM 11", "LIST ITEM 12", "LIST ITEM 13", "LIST ITEM 14", "LIST ITEM 15"};
-			public int getSize() {
-				return values.length;
-			}
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});
+//		listWorkout.setModel(new AbstractListModel() {
+//			String[] values = new String[] {"LIST ITEM 1", "LIST ITEM 2", "LIST ITEM 3", "LIST ITEM 4", "LIST ITEM 5", "LIST ITEM 6", "LIST ITEM 7", "LIST ITEM 8", "LIST ITEM 9", "LIST ITEM 10", "LIST ITEM 11", "LIST ITEM 12", "LIST ITEM 13", "LIST ITEM 14", "LIST ITEM 15"};
+//			public int getSize() {
+//				return values.length;
+//			}
+//			public Object getElementAt(int index) {
+//				return values[index];
+//			}
+//		});
+		listWorkout.setModel(listModel);
 		
 		//-------------
 		// Buttons
@@ -285,6 +290,23 @@ public class Drill_Sergeant {
 		JButton btnDelete = new JButton("   Delete");
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//Remove the selected workout from the workoutList ArrayList.
+				int selectedIndex = listWorkout.getSelectedIndex();
+				handler.removeFromWorkoutList(selectedIndex);
+				//Rewrite the xml with the updated workoutList.
+				XMLWriter theXMLWriter = new XMLWriter();
+				theXMLWriter.writeXML(handler);
+				//Now, wipeout the entire workoutList ArrayList since it is about to be re-created from the new xml file.
+				handler.clearWorkoutList();
+				//Parse the newly written xml.
+				try {
+					clearWorkoutList(); //Clear the JList containing the workouts.
+					parseXML("config/user_config.xml");
+					displayWorkoutList(handler);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		btnDelete.setIcon(new ImageIcon(Drill_Sergeant.class.getResource("/ui/resources/edit-delete-2.png")));
@@ -919,7 +941,7 @@ public class Drill_Sergeant {
     	//Finally, tell the parser to parse the input and notify the handler
     	sp.parse(uri, handler);
     	handler.readList();
-    	displayWorkoutList(handler);
+    	//displayWorkoutList(handler);
 	}
 	
 	//************************************************************
@@ -929,9 +951,35 @@ public class Drill_Sergeant {
 	//************************************************************
 	public void displayWorkoutList(XMLSaxParser handler) {
 		ArrayList<String> listItems = new ArrayList<String>(handler.getListItems());
-		listWorkout.setListData(listItems.toArray());
+		int listItemsSize = listItems.size();
+		
+		System.out.println("listItemsSize = " + listItemsSize);
+//		DefaultListModel listModel = new DefaultListModel();
+//		listModel.clear();
+		for (int i=0; i<listItemsSize; i++) {
+			listModel.addElement(listItems.get(i));
+		}
+		System.out.println(listModel.size());
+//		listWorkout.setModel(listModel);
 	}
 	
+	//************************************************************
+	// clearWorkoutList
+	//		Clear the list of workouts from the list object 
+	//		on the Workout Select screen.
+	//************************************************************
+	public void clearWorkoutList() {
+		System.out.println("clearWorkoutList!!!");
+//		DefaultListModel listModel = new DefaultListModel();
+		listModel.clear();
+		System.out.println(listModel.size());
+		//listWorkout.setModel(listModel);
+	
+//		for (int i=0; i<listItemsSize; i++) {
+//			listModel.(listItems.get(i));
+//		}
+	}
+
 	//************************************************************
 	// selectWorkout
 	//		This method is called when the user highlights a workout
