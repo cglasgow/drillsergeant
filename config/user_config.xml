@@ -2,18 +2,14 @@
 <UserConfig>
     <Workouts>
         <Workout dateCreated="051813" id="0" lastModified="051813" name="Workout 1">
-            <Exercise name="Pushups" pos="1" reps="1" restAfterMin="1" restAfterSec="0" restBetweenMin="2" restBetweenSec="0" sets="4"/>
-            <Exercise name="Pullups" pos="2" reps="2" restAfterMin="1" restAfterSec="0" restBetweenMin="2" restBetweenSec="0" sets="2"/>
-            <Exercise name="Crunches" pos="3" reps="3" restAfterMin="1" restAfterSec="0" restBetweenMin="2" restBetweenSec="0" sets="3"/>
+            <Exercise name="Pushups" pos="1" reps="1" restAfterMin="1" restAfterSec="0" restBetweenMin="0" restBetweenSec="30" sets="4"/>
+            <Exercise name="Pullups" pos="2" reps="2" restAfterMin="1" restAfterSec="0" restBetweenMin="0" restBetweenSec="20" sets="2"/>
+            <Exercise name="Crunches" pos="3" reps="3" restAfterMin="1" restAfterSec="0" restBetweenMin="0" restBetweenSec="10" sets="3"/>
         </Workout>
         <Workout dateCreated="062213" id="1" lastModified="062213" name="Workout 2">
-            <Exercise name="Pushups" pos="1" reps="1" restAfterMin="1" restAfterSec="0" restBetweenMin="2" restBetweenSec="0" sets="4"/>
-            <Exercise name="Pullups" pos="2" reps="2" restAfterMin="1" restAfterSec="0" restBetweenMin="2" restBetweenSec="0" sets="2"/>
-            <Exercise name="Crunches" pos="3" reps="3" restAfterMin="1" restAfterSec="0" restBetweenMin="2" restBetweenSec="0" sets="3"/>
-        </Workout>
-        <Workout dateCreated="" id="" lastModified="" name="SAT">
-            <Exercise name="Pushups" pos="0" reps="0" restAfterMin="0" restAfterSec="0" restBetweenMin="0" restBetweenSec="0" sets="1"/>
-            <Exercise name="Pushups" pos="1" reps="1" restAfterMin="0" restAfterSec="0" restBetweenMin="0" restBetweenSec="0" sets="1"/>
+            <Exercise name="Pushups" pos="0" reps="0" restAfterMin="1" restAfterSec="0" restBetweenMin="0" restBetweenSec="30" sets="4"/>
+            <Exercise name="Pullups" pos="1" reps="1" restAfterMin="1" restAfterSec="0" restBetweenMin="0" restBetweenSec="20" sets="2"/>
+            <Exercise name="Crunches" pos="2" reps="2" restAfterMin="1" restAfterSec="0" restBetweenMin="0" restBetweenSec="10" sets="3"/>
         </Workout>
     </Workouts>
     <Settings>

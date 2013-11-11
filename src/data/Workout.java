@@ -18,7 +18,7 @@ public class Workout {
 	public Workout(String theName) {
 		name = theName;
 	}
-	
+
 	//------------------------------
 	//Workout-Related Methods
 	//------------------------------

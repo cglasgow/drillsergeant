@@ -49,6 +49,8 @@ import java.awt.event.FocusEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.JInternalFrame;
 import javax.swing.JDesktopPane;
@@ -58,11 +60,11 @@ import javax.xml.parsers.SAXParserFactory;
 
 import data.Exercise;
 import data.Workout;
+import data.ActiveWorkout;
 import data.XMLSaxParser;
 import data.XMLWriter;
 
 public class Drill_Sergeant {
-
 	private JFrame 		frmDrillSergeant;
 	private Preview 	frmPreview = new Preview();
 	private JList 		listWorkout;
@@ -70,7 +72,7 @@ public class Drill_Sergeant {
 	private JTextField 	txtCurrentSet;
 	private JTextField 	txtTotalSets;
 	private JTextField 	txtRepCount;
-	private JTextField 	txtSetTimeLeft;
+	private static JTextField 	txtSetTimeLeft;
 	private JTextField 	txtTotalTimeLeft;
 	private JTextField 	txtNext;
 	private JTextField 	txtWorkout;
@@ -86,6 +88,7 @@ public class Drill_Sergeant {
 	private JPanel 		cards = new JPanel(cardlayout);
 	private ImageIcon 	dialogIcon;
 	private Workout 	newWorkout;
+	private Workout activeWorkout;
 	private Workout[] 	workouts = new Workout[50];		//Stores the array of Workout objects, creating a "workout list".
 	private String 		workoutName = new String();
 	private XMLSaxParser handler = new XMLSaxParser();
@@ -576,7 +579,7 @@ public class Drill_Sergeant {
 				
 				if (choice == JOptionPane.NO_OPTION) {
 					newWorkout.save(handler);
-					newWorkout.load();
+					loadWorkout();
 					swapView("card4");
 				} else if (choice == JOptionPane.YES_OPTION) {
 					newWorkout.save(handler);
@@ -748,6 +751,11 @@ public class Drill_Sergeant {
 		//-------------
 		//Start
 		JButton btnStart = new JButton("START");
+		btnStart.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				runWorkout();
+			}
+		});
 		btnStart.setIcon(new ImageIcon(Drill_Sergeant.class.getResource("/ui/resources/stopwatch_start.png")));
 		btnStart.setForeground(new Color(102, 102, 102));
 		btnStart.setFont(new Font("Tahoma", Font.BOLD, 18));
@@ -1001,10 +1009,44 @@ public class Drill_Sergeant {
 		
 		//Switch to either the "Active Workout" or "Edit Workout"
 		if (callingBtnName == "btnOpen2") {
+			loadWorkout();
 			swapView("card4");
 		} else if (callingBtnName == "btnEdit") {
 			swapView("card3");
 		}
 	}
 	
+	//************************************************************
+	// loadWorkout
+	//		This method is called when the user opens a workout 
+	//		(via the "Open") button from the list on the 
+	//		"Select Workout" screen.  Alternatively, it is called
+	//		when the user presses the "Finished" button on the 
+	//		"Edit Workout" screen and subsequently chooses to begin
+	//		the workout.
+	//************************************************************
+	public void loadWorkout() {
+		activeWorkout = new ActiveWorkout();
+		activeWorkout = newWorkout;
+		System.out.println(activeWorkout.toString());
+	}
+	
+	//************************************************************
+	// runWorkout
+	//************************************************************
+	public void runWorkout() {
+		int currentExerciseIndex = 0;
+		int setTimeLeft = activeWorkout.getExercise(currentExerciseIndex).getRestBetween();
+		Timer masterTimer = new Timer();
+		Timer setTimer = new Timer();
+		SetTimerTask t = new SetTimerTask(setTimeLeft);
+        setTimer.schedule(t, 0, 1000);
+	}
+	
+	//************************************************************
+	// setText
+	//************************************************************
+	public static void setText(String theText) {
+		txtSetTimeLeft.setText(theText);
+	}	
 }

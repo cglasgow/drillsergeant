@@ -51,8 +51,9 @@ public class XMLSaxParser extends DefaultHandler {
         	  // workout.setLengthInSecs(attributes.getValue("lengthInSecs"));
            } else if (qName.equalsIgnoreCase("Exercise")) {
         	   Exercise exercise = new Exercise();
-        	   exercise.setPosition(Integer.parseInt(attributes.getValue("pos")));
         	   exercise.setName(attributes.getValue("name"));
+        	   exercise.setPosition(Integer.parseInt(attributes.getValue("pos")));
+        	   exercise.setReps(attributes.getValue("reps"));
         	   exercise.setSets(attributes.getValue("sets"));
         	   exercise.setRestBetween(attributes.getValue("restBetweenMin"), attributes.getValue("restBetweenSec"));
         	   exercise.setRestAfter(attributes.getValue("restAfterMin"), attributes.getValue("restAfterSec"));
