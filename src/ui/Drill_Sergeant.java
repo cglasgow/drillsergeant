@@ -68,15 +68,16 @@ public class Drill_Sergeant {
 	private JFrame 		frmDrillSergeant;
 	private Preview 	frmPreview = new Preview();
 	private JList 		listWorkout;
-	private JTextField 	txtCurrent;
-	private JTextField 	txtCurrentSet;
-	private JTextField 	txtTotalSets;
-	private JTextField 	txtRepCount;
+	private static JTextField 	txtCurrent;
+	private static JTextField 	txtCurrentSet;
+	private static JTextField 	txtTotalSets;
+	private static JTextField 	txtRepCount;
 	private static JTextField 	txtSetTimeLeft;
-	private JTextField 	txtTotalTimeLeft;
-	private JTextField 	txtNext;
-	private JTextField 	txtWorkout;
+	private static JTextField 	txtTotalTimeLeft;
+	private static JTextField 	txtNext;
+	private static JTextField 	txtWorkout;
 	private JButton		btnPreview;
+	private JButton 	btnStart;
 	private JComboBox 	cbName;
 	private JComboBox 	cbSets;
 	private JComboBox 	cbReps;
@@ -94,6 +95,11 @@ public class Drill_Sergeant {
 	private XMLSaxParser handler = new XMLSaxParser();
 	private Boolean		isXMLParsed = false;
 	private DefaultListModel listModel = new DefaultListModel();
+	private Timer masterTimer;
+	private int timeOfPause;
+	private WorkoutTimerTask totalTimeCountdownTask;
+	private Boolean isWorkoutRunning = false;
+	private Boolean isWorkoutPaused = false;
 	
 	//************************************************************
 	// main
@@ -750,10 +756,20 @@ public class Drill_Sergeant {
 		// Buttons
 		//-------------
 		//Start
-		JButton btnStart = new JButton("START");
+		btnStart = new JButton("START");
 		btnStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				runWorkout();
+				if (isWorkoutRunning) {
+					if (isWorkoutPaused) {
+						resumeWorkout();
+					} else {
+						pauseWorkout();
+					}
+				} else {
+					runWorkout();
+				}
+				System.out.println("isWorkoutRunning = " + isWorkoutRunning);
+				System.out.println("isWorkoutPaused = " + isWorkoutPaused);
 			}
 		});
 		btnStart.setIcon(new ImageIcon(Drill_Sergeant.class.getResource("/ui/resources/stopwatch_start.png")));
@@ -1035,18 +1051,57 @@ public class Drill_Sergeant {
 	// runWorkout
 	//************************************************************
 	public void runWorkout() {
+		isWorkoutRunning = true;
 		int currentExerciseIndex = 0;
 		int setTimeLeft = activeWorkout.getExercise(currentExerciseIndex).getRestBetween();
-		Timer masterTimer = new Timer();
+		//System.out.println(activeWorkout.getLengthInSecs()); //lengthInSecs is currently null because it has not been computed and set.  This still needs to be done...
+		//int totalTimeLeft = Integer.parseInt(activeWorkout.getLengthInSecs());
+		int totalTimeLeft = 1800; //just for testing for now...
+		masterTimer = new Timer();
 		Timer setTimer = new Timer();
-		SetTimerTask t = new SetTimerTask(setTimeLeft);
-        setTimer.schedule(t, 0, 1000);
+		WorkoutTimerTask setTimeCountdownTask = new WorkoutTimerTask(setTimeLeft, 1);
+		totalTimeCountdownTask = new WorkoutTimerTask(totalTimeLeft, 0);
+        setTimer.schedule(setTimeCountdownTask, 0, 1000);
+		masterTimer.schedule(totalTimeCountdownTask, 0, 1000);
+		btnStart.setIcon(new ImageIcon(Drill_Sergeant.class.getResource("/ui/resources/media-playback-pause.png")));
+		btnStart.setText("PAUSE");
 	}
 	
 	//************************************************************
-	// setText
+	// pauseWorkout
 	//************************************************************
-	public static void setText(String theText) {
+	public void pauseWorkout() {
+		timeOfPause = totalTimeCountdownTask.getTimeLeft();
+		masterTimer.cancel();
+		isWorkoutPaused = true;
+		btnStart.setIcon(new ImageIcon(Drill_Sergeant.class.getResource("/ui/resources/stopwatch_start.png")));
+		btnStart.setText("RESUME");
+	}
+	
+	//************************************************************
+	// resumeWorkout
+	//************************************************************
+	public void resumeWorkout() {
+		timeOfPause = totalTimeCountdownTask.getTimeLeft();
+		masterTimer = new Timer();
+		totalTimeCountdownTask = new WorkoutTimerTask(timeOfPause, 0);
+		masterTimer.schedule(totalTimeCountdownTask, 0, 1000);
+		isWorkoutPaused = false;
+		btnStart.setIcon(new ImageIcon(Drill_Sergeant.class.getResource("/ui/resources/media-playback-pause.png")));
+		btnStart.setText("PAUSE");
+	}
+		
+	//************************************************************
+	// setTxtSetTimeLeft
+	//************************************************************
+	public static void setTxtSetTimeLeft(String theText) {
 		txtSetTimeLeft.setText(theText);
-	}	
+	}
+	
+	//************************************************************
+	// setTxtTotalTimeLeft
+	//************************************************************
+	public static void setTxtTotalTimeLeft(String theText) {
+		txtTotalTimeLeft.setText(theText);
+	}
 }

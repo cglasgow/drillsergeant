@@ -47,7 +47,7 @@ public class Workout {
 	}
 	
 	public String getLastModified() {
-			return lastModified;
+		return lastModified;
 	}
 	
 	public void setLastModified(String lastModified) {
