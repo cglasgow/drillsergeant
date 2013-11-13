@@ -96,8 +96,11 @@ public class Drill_Sergeant {
 	private Boolean		isXMLParsed = false;
 	private DefaultListModel listModel = new DefaultListModel();
 	private Timer masterTimer;
-	private int timeOfPause;
-	private WorkoutTimerTask totalTimeCountdownTask;
+	private Timer setTimer;
+	private int timeOfPauseSet;
+	private int timeOfPauseMaster;
+	private WorkoutTimerTask masterTimeCountdownTask;
+	private WorkoutTimerTask setTimeCountdownTask;
 	private Boolean isWorkoutRunning = false;
 	private Boolean isWorkoutPaused = false;
 	
@@ -266,7 +269,7 @@ public class Drill_Sergeant {
 		listWorkout.setDragEnabled(true);
 		scrollWorkout.setViewportView(listWorkout);
 		listWorkout.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		listWorkout.setFont(new Font("Cordia New", Font.PLAIN, 16));
+		listWorkout.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		listWorkout.setBorder(new BevelBorder(BevelBorder.LOWERED, UIManager.getColor("InternalFrame.resizeIconShadow"), UIManager.getColor("InternalFrame.borderLight"), null, null));
 //		listWorkout.setModel(new AbstractListModel() {
 //			String[] values = new String[] {"LIST ITEM 1", "LIST ITEM 2", "LIST ITEM 3", "LIST ITEM 4", "LIST ITEM 5", "LIST ITEM 6", "LIST ITEM 7", "LIST ITEM 8", "LIST ITEM 9", "LIST ITEM 10", "LIST ITEM 11", "LIST ITEM 12", "LIST ITEM 13", "LIST ITEM 14", "LIST ITEM 15"};
@@ -1058,11 +1061,11 @@ public class Drill_Sergeant {
 		//int totalTimeLeft = Integer.parseInt(activeWorkout.getLengthInSecs());
 		int totalTimeLeft = 1800; //just for testing for now...
 		masterTimer = new Timer();
-		Timer setTimer = new Timer();
-		WorkoutTimerTask setTimeCountdownTask = new WorkoutTimerTask(setTimeLeft, 1);
-		totalTimeCountdownTask = new WorkoutTimerTask(totalTimeLeft, 0);
+		setTimer = new Timer();
+		masterTimeCountdownTask = new WorkoutTimerTask(totalTimeLeft, "MASTER");
+		setTimeCountdownTask = new WorkoutTimerTask(setTimeLeft, "SET");
+		masterTimer.schedule(masterTimeCountdownTask, 0, 1000);
         setTimer.schedule(setTimeCountdownTask, 0, 1000);
-		masterTimer.schedule(totalTimeCountdownTask, 0, 1000);
 		btnStart.setIcon(new ImageIcon(Drill_Sergeant.class.getResource("/ui/resources/media-playback-pause.png")));
 		btnStart.setText("PAUSE");
 	}
@@ -1071,8 +1074,10 @@ public class Drill_Sergeant {
 	// pauseWorkout
 	//************************************************************
 	public void pauseWorkout() {
-		timeOfPause = totalTimeCountdownTask.getTimeLeft();
+		timeOfPauseMaster = masterTimeCountdownTask.getTimeLeft();
+		timeOfPauseSet = setTimeCountdownTask.getTimeLeft();
 		masterTimer.cancel();
+		setTimer.cancel();
 		isWorkoutPaused = true;
 		btnStart.setIcon(new ImageIcon(Drill_Sergeant.class.getResource("/ui/resources/stopwatch_start.png")));
 		btnStart.setText("RESUME");
@@ -1082,10 +1087,12 @@ public class Drill_Sergeant {
 	// resumeWorkout
 	//************************************************************
 	public void resumeWorkout() {
-		timeOfPause = totalTimeCountdownTask.getTimeLeft();
 		masterTimer = new Timer();
-		totalTimeCountdownTask = new WorkoutTimerTask(timeOfPause, 0);
-		masterTimer.schedule(totalTimeCountdownTask, 0, 1000);
+		setTimer	= new Timer();
+		masterTimeCountdownTask = new WorkoutTimerTask(timeOfPauseMaster, "MASTER");
+		setTimeCountdownTask = new WorkoutTimerTask(timeOfPauseSet, "SET");
+		masterTimer.schedule(masterTimeCountdownTask, 0, 1000);
+		setTimer.schedule(setTimeCountdownTask, 0, 1000);
 		isWorkoutPaused = false;
 		btnStart.setIcon(new ImageIcon(Drill_Sergeant.class.getResource("/ui/resources/media-playback-pause.png")));
 		btnStart.setText("PAUSE");

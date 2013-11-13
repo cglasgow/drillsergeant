@@ -5,17 +5,17 @@ import data.ActiveWorkout;
 
 public class WorkoutTimerTask extends TimerTask {
 	private int timeLeft;
-	private int timerType;
+	private String timerType;
 	
-	public WorkoutTimerTask(int theTimeLeft, int theTimerType) {
+	public WorkoutTimerTask(int theTimeLeft, String theTimerType) {
 		timeLeft = theTimeLeft;
 		timerType = theTimerType;
 	}
 
     public void run() {
-    	if (timerType == 0)
+    	if (timerType == "MASTER")
     		countDownTotalTime();
-    	else if (timerType == 1)
+    	else if (timerType == "SET")
     		countDownSetTime();
     }
     
