@@ -5,13 +5,13 @@ import java.util.*; //For ArrayList
 
 
 public class Workout {
-	private String name;
-	private String id;
-    private String dateCreated;
-    private String lastModified;
-    private String lengthInSecs;
-	private ArrayList<Exercise> exercises = new ArrayList<Exercise>(); //The list of exercises contained within the workout.
-	private int currentExerciseIndex = 0;
+	protected String name;
+	protected String id;
+	protected String dateCreated;
+	protected String lastModified;
+	protected String lengthInSecs;
+	protected ArrayList<Exercise> exercises = new ArrayList<Exercise>(); //The list of exercises contained within the workout.
+	protected int currentExerciseIndex = 0;
 	
 	
 	

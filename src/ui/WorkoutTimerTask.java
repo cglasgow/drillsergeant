@@ -23,10 +23,12 @@ public class WorkoutTimerTask extends TimerTask {
     	timeLeft--;
     	Drill_Sergeant.setTxtSetTimeLeft(Integer.toString(timeLeft));
     	if (timeLeft < 0) {
-    		Drill_Sergeant.setTxtSetTimeLeft("DONE!");
+    		//Drill_Sergeant.setTxtSetTimeLeft("DONE!");
+    		Drill_Sergeant.loadNextSet();
     		this.cancel();
     	}
     }
+    
     public void countDownTotalTime() {
     	timeLeft--;
     	Drill_Sergeant.setTxtTotalTimeLeft(Integer.toString(timeLeft));

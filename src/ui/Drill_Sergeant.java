@@ -65,9 +65,9 @@ import data.XMLSaxParser;
 import data.XMLWriter;
 
 public class Drill_Sergeant {
-	private JFrame 		frmDrillSergeant;
-	private Preview 	frmPreview = new Preview();
-	private JList 		listWorkout;
+	private JFrame 				frmDrillSergeant;
+	private Preview 			frmPreview = new Preview();
+	private JList 				listWorkout;
 	private static JTextField 	txtCurrent;
 	private static JTextField 	txtCurrentSet;
 	private static JTextField 	txtTotalSets;
@@ -76,33 +76,33 @@ public class Drill_Sergeant {
 	private static JTextField 	txtTotalTimeLeft;
 	private static JTextField 	txtNext;
 	private static JTextField 	txtWorkout;
-	private JButton		btnPreview;
-	private JButton 	btnStart;
-	private JComboBox 	cbName;
-	private JComboBox 	cbSets;
-	private JComboBox 	cbReps;
-	private JComboBox 	cbBetweenMin;
-	private JComboBox 	cbBetweenSec;
-	private JComboBox 	cbAfterMin;
-	private JComboBox 	cbAfterSec;
-	private CardLayout 	cardlayout = new CardLayout();
-	private JPanel 		cards = new JPanel(cardlayout);
-	private ImageIcon 	dialogIcon;
-	private Workout 	newWorkout;
-	private Workout activeWorkout;
-	private Workout[] 	workouts = new Workout[50];		//Stores the array of Workout objects, creating a "workout list".
-	private String 		workoutName = new String();
-	private XMLSaxParser handler = new XMLSaxParser();
-	private Boolean		isXMLParsed = false;
-	private DefaultListModel listModel = new DefaultListModel();
-	private Timer masterTimer;
-	private Timer setTimer;
-	private int timeOfPauseSet;
-	private int timeOfPauseMaster;
-	private WorkoutTimerTask masterTimeCountdownTask;
-	private WorkoutTimerTask setTimeCountdownTask;
-	private Boolean isWorkoutRunning = false;
-	private Boolean isWorkoutPaused = false;
+	private JButton				btnPreview;
+	private JButton 			btnStart;
+	private JComboBox 			cbName;
+	private JComboBox 			cbSets;
+	private JComboBox 			cbReps;
+	private JComboBox 			cbBetweenMin;
+	private JComboBox 			cbBetweenSec;
+	private JComboBox 			cbAfterMin;
+	private JComboBox 			cbAfterSec;
+	private CardLayout 			cardlayout = new CardLayout();
+	private JPanel 				cards = new JPanel(cardlayout);
+	private ImageIcon 			dialogIcon;
+	private Workout 			newWorkout;
+	private ActiveWorkout 		activeWorkout;
+	private Workout[] 			workouts = new Workout[50];		//Stores the array of Workout objects, creating a "workout list".
+	private String 				workoutName = new String();
+	private XMLSaxParser 		handler = new XMLSaxParser();
+	private Boolean				isXMLParsed = false;
+	private DefaultListModel 	listModel = new DefaultListModel();
+	private Timer 				masterTimer;
+	private Timer 				setTimer;
+	private int 				timeOfPauseSet;
+	private int 				timeOfPauseMaster;
+	private WorkoutTimerTask 	masterTimeCountdownTask;
+	private WorkoutTimerTask 	setTimeCountdownTask;
+	private Boolean 			isWorkoutRunning = false;
+	private Boolean 			isWorkoutPaused = false;
 	
 	//************************************************************
 	// main
@@ -1046,8 +1046,9 @@ public class Drill_Sergeant {
 	//************************************************************
 	public void loadWorkout() {
 		activeWorkout = new ActiveWorkout();
-		activeWorkout = newWorkout;
+		//activeWorkout = newWorkout;
 		System.out.println(activeWorkout.toString());
+		
 	}
 	
 	//************************************************************
@@ -1055,8 +1056,9 @@ public class Drill_Sergeant {
 	//************************************************************
 	public void runWorkout() {
 		isWorkoutRunning = true;
-		int currentExerciseIndex = 0;
-		int setTimeLeft = activeWorkout.getExercise(currentExerciseIndex).getRestBetween();
+		loadNextExercise();
+		
+		int setTimeLeft = activeWorkout.getExercise(eIndex).getRestBetween();
 		//System.out.println(activeWorkout.getLengthInSecs()); //lengthInSecs is currently null because it has not been computed and set.  This still needs to be done...
 		//int totalTimeLeft = Integer.parseInt(activeWorkout.getLengthInSecs());
 		int totalTimeLeft = 1800; //just for testing for now...
@@ -1097,7 +1099,40 @@ public class Drill_Sergeant {
 		btnStart.setIcon(new ImageIcon(Drill_Sergeant.class.getResource("/ui/resources/media-playback-pause.png")));
 		btnStart.setText("PAUSE");
 	}
+	
+	//************************************************************
+	// loadNextExercise
+	//************************************************************
+	public void loadNextExercise() {
+		int index = activeWorkout.getCurrentExerciseIndex() + 1;
 		
+		if (index < activeWorkout.getExerciseListSize()) {
+			activeWorkout.setCurrentExerciseIndex(index);
+			//Set GUI text fields...
+			txtCurrent.setText(activeWorkout.getExercise(index).getName());
+			if ( index < (activeWorkout.getExerciseListSize() - 1) ) {
+				txtNext.setText(activeWorkout.getExercise(index+1).getName());
+			}
+			txtCurrentSet.setText(Integer.toString(activeWorkout.getExercise(index).getSets()));
+			txtTotalSets.setText(Integer.toString(activeWorkout.getExercise(index).getSets()));
+			txtRepCount.setText(Integer.toString(activeWorkout.getExercise(index).getReps()));
+		}
+	}
+	
+	//************************************************************
+	// loadNextSet
+	//************************************************************
+	public void loadNextSet() {
+		int index = activeWorkout.getCurrentExerciseIndex();
+		//Check if the current set is the final set and load the next exercise if so.  Otherwise, continue loading the next set.
+		if (activeWorkout.getCurrentSet() == activeWorkout.getExercise(index).getSets()) {
+			loadNextExercise();
+		} else {
+			activeWorkout.setCurrentExerciseIndex(index);
+		}
+	}
+	
+	
 	//************************************************************
 	// setTxtSetTimeLeft
 	//************************************************************
