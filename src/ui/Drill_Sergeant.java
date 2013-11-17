@@ -65,7 +65,7 @@ import data.XMLSaxParser;
 import data.XMLWriter;
 
 public class Drill_Sergeant {
-	private JFrame 				frmDrillSergeant;
+	protected JFrame 			frmDrillSergeant;
 	private Preview 			frmPreview = new Preview();
 	private JList 				listWorkout;
 	private static JTextField 	txtCurrent;
@@ -76,6 +76,7 @@ public class Drill_Sergeant {
 	private static JTextField 	txtTotalTimeLeft;
 	private static JTextField 	txtNext;
 	private static JTextField 	txtWorkout;
+	private JLabel 				lblWorkoutTitle;
 	private JButton				btnPreview;
 	private JButton 			btnStart;
 	private JComboBox 			cbName;
@@ -104,27 +105,27 @@ public class Drill_Sergeant {
 	private Boolean 			isWorkoutRunning = false;
 	private Boolean 			isWorkoutPaused = false;
 	
-	//************************************************************
-	// main
-	//		Launch the application.
-	//************************************************************
-	public static void main(String[] args) {
-		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (Throwable e) {
-			e.printStackTrace();
-		}
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Drill_Sergeant window = new Drill_Sergeant();
-					window.frmDrillSergeant.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	//************************************************************
+//	// main
+//	//		Launch the application.
+//	//************************************************************
+//	public static void main(String[] args) {
+//		try {
+//			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+//		} catch (Throwable e) {
+//			e.printStackTrace();
+//		}
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					Drill_Sergeant window = new Drill_Sergeant();
+//					window.frmDrillSergeant.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 	
 
 	//************************************************************
@@ -132,6 +133,13 @@ public class Drill_Sergeant {
 	//		Initialize the contents of the frame.
 	//************************************************************
 	public Drill_Sergeant() {
+		//Set UI look and feel.
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
+		
 		//Main Application Frame
 		frmDrillSergeant = new JFrame();
 		frmDrillSergeant.setName("DrillSergeant");
@@ -614,7 +622,7 @@ public class Drill_Sergeant {
 		// Text
 		//-------------
 		//Workout Name
-		JLabel lblWorkoutTitle = new JLabel("Name Of Workout");
+		lblWorkoutTitle = new JLabel("");
 		lblWorkoutTitle.setForeground(new Color(102, 102, 102));
 		lblWorkoutTitle.setFont(new Font("Tahoma", Font.BOLD, 18));
 		lblWorkoutTitle.setHorizontalAlignment(SwingConstants.CENTER);
@@ -632,7 +640,7 @@ public class Drill_Sergeant {
 		txtCurrent.setHorizontalAlignment(SwingConstants.LEFT);
 		txtCurrent.setForeground(new Color(0, 153, 0));
 		txtCurrent.setFont(new Font("Tahoma", Font.BOLD, 24));
-		txtCurrent.setText("PULL-UPS");
+		txtCurrent.setText("");
 		txtCurrent.setEditable(false);
 		txtCurrent.setBounds(75, 48, 429, 57);
 		card4.add(txtCurrent);
@@ -648,7 +656,7 @@ public class Drill_Sergeant {
 		txtNext = new JTextField();
 		txtNext.setHorizontalAlignment(SwingConstants.LEFT);
 		txtNext.setEnabled(false);
-		txtNext.setText("CRUNCHES");
+		txtNext.setText("");
 		txtNext.setForeground(new Color(102, 102, 102));
 		txtNext.setFont(new Font("Tahoma", Font.BOLD, 14));
 		txtNext.setEditable(false);
@@ -668,7 +676,7 @@ public class Drill_Sergeant {
 		txtCurrentSet.setForeground(new Color(0, 153, 0));
 		txtCurrentSet.setFont(new Font("Tahoma", Font.BOLD, 24));
 		txtCurrentSet.setHorizontalAlignment(SwingConstants.CENTER);
-		txtCurrentSet.setText("1");
+		txtCurrentSet.setText("");
 		txtCurrentSet.setBounds(173, 167, 60, 57);
 		card4.add(txtCurrentSet);
 		txtCurrentSet.setColumns(10);
@@ -684,7 +692,7 @@ public class Drill_Sergeant {
 		txtTotalSets.setForeground(new Color(0, 153, 0));
 		txtTotalSets.setFont(new Font("Tahoma", Font.BOLD, 24));
 		txtTotalSets.setHorizontalAlignment(SwingConstants.CENTER);
-		txtTotalSets.setText("5");
+		txtTotalSets.setText("");
 		txtTotalSets.setEditable(false);
 		txtTotalSets.setColumns(10);
 		txtTotalSets.setBounds(279, 167, 60, 57);
@@ -699,7 +707,7 @@ public class Drill_Sergeant {
 		txtRepCount = new JTextField();
 		txtRepCount.setForeground(new Color(0, 153, 0));
 		txtRepCount.setHorizontalAlignment(SwingConstants.CENTER);
-		txtRepCount.setText("10");
+		txtRepCount.setText("");
 		txtRepCount.setFont(new Font("Tahoma", Font.BOLD, 48));
 		txtRepCount.setEditable(false);
 		txtRepCount.setBounds(44, 253, 155, 52);
@@ -715,7 +723,7 @@ public class Drill_Sergeant {
 		txtSetTimeLeft = new JTextField();
 		txtSetTimeLeft.setForeground(new Color(0, 153, 0));
 		txtSetTimeLeft.setHorizontalAlignment(SwingConstants.CENTER);
-		txtSetTimeLeft.setText("1:30");
+		txtSetTimeLeft.setText("");
 		txtSetTimeLeft.setFont(new Font("Tahoma", Font.BOLD, 48));
 		txtSetTimeLeft.setEditable(false);
 		txtSetTimeLeft.setColumns(10);
@@ -742,7 +750,7 @@ public class Drill_Sergeant {
 		txtTotalTimeLeft.setForeground(new Color(102, 102, 102));
 		txtTotalTimeLeft.setHorizontalAlignment(SwingConstants.CENTER);
 		txtTotalTimeLeft.setFont(new Font("Tahoma", Font.BOLD, 16));
-		txtTotalTimeLeft.setText("hh:mm:ss");
+		txtTotalTimeLeft.setText("");
 		txtTotalTimeLeft.setEditable(false);
 		txtTotalTimeLeft.setBounds(376, 380, 96, 26);
 		card4.add(txtTotalTimeLeft);
@@ -1045,8 +1053,8 @@ public class Drill_Sergeant {
 	//		the workout.
 	//************************************************************
 	public void loadWorkout() {
-		activeWorkout = new ActiveWorkout();
-		//activeWorkout = newWorkout;
+		activeWorkout = new ActiveWorkout(newWorkout);
+		lblWorkoutTitle.setText(activeWorkout.getName());
 		System.out.println(activeWorkout.toString());
 		
 	}
@@ -1056,20 +1064,28 @@ public class Drill_Sergeant {
 	//************************************************************
 	public void runWorkout() {
 		isWorkoutRunning = true;
-		loadNextExercise();
+		Boolean areExercisesRemaining = true;
+		int totalTimeLeft = 43; //just for testing for now...
+		int setTimeLeft = activeWorkout.getExercise(0).getRestBetween();
+		//int setTimeLeft = 3; //FOR TESTING
 		
-		int setTimeLeft = activeWorkout.getExercise(eIndex).getRestBetween();
+//		while (areExercisesRemaining) {
+//			areExercisesRemaining = loadNextExercise();
+//		}
+		
 		//System.out.println(activeWorkout.getLengthInSecs()); //lengthInSecs is currently null because it has not been computed and set.  This still needs to be done...
 		//int totalTimeLeft = Integer.parseInt(activeWorkout.getLengthInSecs());
-		int totalTimeLeft = 1800; //just for testing for now...
+		
 		masterTimer = new Timer();
 		setTimer = new Timer();
-		masterTimeCountdownTask = new WorkoutTimerTask(totalTimeLeft, "MASTER");
-		setTimeCountdownTask = new WorkoutTimerTask(setTimeLeft, "SET");
+		this.masterTimeCountdownTask = new WorkoutTimerTask(this, totalTimeLeft, "MASTER");
+		//this.setTimeCountdownTask = new WorkoutTimerTask(this, setTimeLeft, "SET");
 		masterTimer.schedule(masterTimeCountdownTask, 0, 1000);
-        setTimer.schedule(setTimeCountdownTask, 0, 1000);
+        //setTimer.schedule(setTimeCountdownTask, 0, 1000);
 		btnStart.setIcon(new ImageIcon(Drill_Sergeant.class.getResource("/ui/resources/media-playback-pause.png")));
 		btnStart.setText("PAUSE");
+		
+		loadNextExercise();
 	}
 	
 	//************************************************************
@@ -1091,8 +1107,8 @@ public class Drill_Sergeant {
 	public void resumeWorkout() {
 		masterTimer = new Timer();
 		setTimer	= new Timer();
-		masterTimeCountdownTask = new WorkoutTimerTask(timeOfPauseMaster, "MASTER");
-		setTimeCountdownTask = new WorkoutTimerTask(timeOfPauseSet, "SET");
+		this.masterTimeCountdownTask = new WorkoutTimerTask(this, timeOfPauseMaster, "MASTER");
+		this.setTimeCountdownTask = new WorkoutTimerTask(this, timeOfPauseSet, "SET");
 		masterTimer.schedule(masterTimeCountdownTask, 0, 1000);
 		setTimer.schedule(setTimeCountdownTask, 0, 1000);
 		isWorkoutPaused = false;
@@ -1103,20 +1119,41 @@ public class Drill_Sergeant {
 	//************************************************************
 	// loadNextExercise
 	//************************************************************
-	public void loadNextExercise() {
+	public Boolean loadNextExercise() {
 		int index = activeWorkout.getCurrentExerciseIndex() + 1;
+		Boolean areExercisesRemaining;
 		
 		if (index < activeWorkout.getExerciseListSize()) {
+			System.out.println("Exercise Index = " + index);
 			activeWorkout.setCurrentExerciseIndex(index);
+			
+			//Reset the Set timer.
+			int setTimeLeft = activeWorkout.getExercise(index).getRestBetween();
+			System.out.println("setTimeLeft = " + setTimeLeft);
+			setTimer.cancel();
+			setTimer = new Timer();
+			setTimeCountdownTask = new WorkoutTimerTask(this, setTimeLeft, "SET");
+	        setTimer.schedule(setTimeCountdownTask, 0, 1000);
+			
+			activeWorkout.setCurrentExerciseIndex(index);
+			activeWorkout.setCurrentSet(1);
 			//Set GUI text fields...
 			txtCurrent.setText(activeWorkout.getExercise(index).getName());
 			if ( index < (activeWorkout.getExerciseListSize() - 1) ) {
 				txtNext.setText(activeWorkout.getExercise(index+1).getName());
+			} else {
+				txtNext.setText("");
 			}
-			txtCurrentSet.setText(Integer.toString(activeWorkout.getExercise(index).getSets()));
+			txtCurrentSet.setText(Integer.toString(activeWorkout.getCurrentSet()));
 			txtTotalSets.setText(Integer.toString(activeWorkout.getExercise(index).getSets()));
 			txtRepCount.setText(Integer.toString(activeWorkout.getExercise(index).getReps()));
+			areExercisesRemaining = true;
+		} else {
+				areExercisesRemaining = false;
+				setTimer.cancel();
+				System.out.println("WORKOUT COMPLETED.");
 		}
+		return areExercisesRemaining;
 	}
 	
 	//************************************************************
@@ -1128,7 +1165,17 @@ public class Drill_Sergeant {
 		if (activeWorkout.getCurrentSet() == activeWorkout.getExercise(index).getSets()) {
 			loadNextExercise();
 		} else {
-			activeWorkout.setCurrentExerciseIndex(index);
+			int currentSet = activeWorkout.getCurrentSet();
+			activeWorkout.setCurrentSet(currentSet+1);
+			System.out.println("Set Index = " + currentSet);
+			
+			//Set GUI textfield.
+			txtCurrentSet.setText(Integer.toString(activeWorkout.getCurrentSet()));
+			
+			//Reset the Set timer.
+			int setTimeLeft = activeWorkout.getExercise(index).getRestBetween();
+			setTimeCountdownTask = new WorkoutTimerTask(this, setTimeLeft, "SET");
+			setTimer.schedule(setTimeCountdownTask, 0, 1000);
 		}
 	}
 	
@@ -1136,14 +1183,14 @@ public class Drill_Sergeant {
 	//************************************************************
 	// setTxtSetTimeLeft
 	//************************************************************
-	public static void setTxtSetTimeLeft(String theText) {
-		txtSetTimeLeft.setText(theText);
+	public void setTxtSetTimeLeft(String theText) {
+		this.txtSetTimeLeft.setText(theText);
 	}
 	
 	//************************************************************
 	// setTxtTotalTimeLeft
 	//************************************************************
-	public static void setTxtTotalTimeLeft(String theText) {
-		txtTotalTimeLeft.setText(theText);
+	public void setTxtTotalTimeLeft(String theText) {
+		this.txtTotalTimeLeft.setText(theText);
 	}
 }

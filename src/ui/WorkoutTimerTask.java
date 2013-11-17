@@ -1,43 +1,43 @@
 package ui;
 
 import java.util.TimerTask;
-import data.ActiveWorkout;
 
 public class WorkoutTimerTask extends TimerTask {
 	private int timeLeft;
 	private String timerType;
+	Drill_Sergeant dsRef;
 	
-	public WorkoutTimerTask(int theTimeLeft, String theTimerType) {
+	public WorkoutTimerTask(Drill_Sergeant ds, int theTimeLeft, String theTimerType) {
 		timeLeft = theTimeLeft;
 		timerType = theTimerType;
+		dsRef = ds;
 	}
-
-    public void run() {
+	
+	public void run() {
     	if (timerType == "MASTER")
     		countDownTotalTime();
     	else if (timerType == "SET")
     		countDownSetTime();
     }
-    
+	
     public void countDownSetTime() {
+    	dsRef.setTxtSetTimeLeft(Integer.toString(timeLeft));
     	timeLeft--;
-    	Drill_Sergeant.setTxtSetTimeLeft(Integer.toString(timeLeft));
     	if (timeLeft < 0) {
-    		//Drill_Sergeant.setTxtSetTimeLeft("DONE!");
-    		Drill_Sergeant.loadNextSet();
     		this.cancel();
+    		dsRef.loadNextSet();
     	}
     }
     
     public void countDownTotalTime() {
+    	dsRef.setTxtTotalTimeLeft(Integer.toString(timeLeft));
     	timeLeft--;
-    	Drill_Sergeant.setTxtTotalTimeLeft(Integer.toString(timeLeft));
     	if (timeLeft < 0) {
-    		Drill_Sergeant.setTxtTotalTimeLeft("DONE!");
     		this.cancel();
     	}
     }
     public int getTimeLeft() {
     	return timeLeft;
     }
+
 }
