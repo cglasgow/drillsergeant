@@ -638,7 +638,7 @@ public class Drill_Sergeant {
 		
 		txtCurrent = new JTextField();
 		txtCurrent.setHorizontalAlignment(SwingConstants.LEFT);
-		txtCurrent.setForeground(new Color(0, 153, 0));
+		txtCurrent.setForeground(new Color(0, 153, 204));
 		txtCurrent.setFont(new Font("Tahoma", Font.BOLD, 24));
 		txtCurrent.setText("");
 		txtCurrent.setEditable(false);
@@ -673,7 +673,7 @@ public class Drill_Sergeant {
 		
 		txtCurrentSet = new JTextField();
 		txtCurrentSet.setEditable(false);
-		txtCurrentSet.setForeground(new Color(0, 153, 0));
+		txtCurrentSet.setForeground(new Color(0, 153, 204));
 		txtCurrentSet.setFont(new Font("Tahoma", Font.BOLD, 24));
 		txtCurrentSet.setHorizontalAlignment(SwingConstants.CENTER);
 		txtCurrentSet.setText("");
@@ -689,7 +689,7 @@ public class Drill_Sergeant {
 		
 		//Total Sets
 		txtTotalSets = new JTextField();
-		txtTotalSets.setForeground(new Color(0, 153, 0));
+		txtTotalSets.setForeground(new Color(0, 153, 204));
 		txtTotalSets.setFont(new Font("Tahoma", Font.BOLD, 24));
 		txtTotalSets.setHorizontalAlignment(SwingConstants.CENTER);
 		txtTotalSets.setText("");
@@ -705,7 +705,7 @@ public class Drill_Sergeant {
 		card4.add(lblRepCount);
 		
 		txtRepCount = new JTextField();
-		txtRepCount.setForeground(new Color(0, 153, 0));
+		txtRepCount.setForeground(new Color(0, 153, 204));
 		txtRepCount.setHorizontalAlignment(SwingConstants.CENTER);
 		txtRepCount.setText("");
 		txtRepCount.setFont(new Font("Tahoma", Font.BOLD, 48));
@@ -721,7 +721,7 @@ public class Drill_Sergeant {
 		card4.add(lblNextSetStarts);
 		
 		txtSetTimeLeft = new JTextField();
-		txtSetTimeLeft.setForeground(new Color(0, 153, 0));
+		txtSetTimeLeft.setForeground(new Color(0, 153, 204));
 		txtSetTimeLeft.setHorizontalAlignment(SwingConstants.CENTER);
 		txtSetTimeLeft.setText("");
 		txtSetTimeLeft.setFont(new Font("Tahoma", Font.BOLD, 48));
@@ -747,7 +747,7 @@ public class Drill_Sergeant {
 		card4.add(lblTimeRemaining);
 		
 		txtTotalTimeLeft = new JTextField();
-		txtTotalTimeLeft.setForeground(new Color(102, 102, 102));
+		txtTotalTimeLeft.setForeground(new Color(0, 153, 204));
 		txtTotalTimeLeft.setHorizontalAlignment(SwingConstants.CENTER);
 		txtTotalTimeLeft.setFont(new Font("Tahoma", Font.BOLD, 16));
 		txtTotalTimeLeft.setText("");
