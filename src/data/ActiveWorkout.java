@@ -21,12 +21,12 @@ public class ActiveWorkout extends Workout {
 	
 	public ActiveWorkout(Workout base) {
 		super("Active Workout");
-		this.dateCreated = base.dateCreated;
-		this.exercises = base.exercises;
-		this.id = base.id;
-		this.lastModified = base.lastModified;
-		this.lengthInSecs = base.lengthInSecs;
-		this.name = base.name;
+		dateCreated = base.dateCreated;
+		exercises = base.exercises;
+		id = base.id;
+		lastModified = base.lastModified;
+		lengthInSecs = base.lengthInSecs;
+		name = base.name;
 	}
 	
 	public void decrementTimeLeft() {
@@ -34,11 +34,11 @@ public class ActiveWorkout extends Workout {
 	}
 	
 	public void setCurrentExerciseIndex(int index) {
-		this.currentExerciseIndex = index;
+		currentExerciseIndex = index;
 	}
 	
 	public void setCurrentSet(int setNum) {
-		this.currentSet = setNum;
+		currentSet = setNum;
 	}
 	
 	public int getTimeLeft() {

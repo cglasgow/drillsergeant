@@ -2,9 +2,9 @@
 <UserConfig>
     <Workouts>
         <Workout dateCreated="051813" id="0" lastModified="051813" name="Workout 1">
-            <Exercise name="Pushups" pos="1" reps="30" restAfterMin="1" restAfterSec="0" restBetweenMin="0" restBetweenSec="5" sets="4"/>
-            <Exercise name="Pullups" pos="2" reps="15" restAfterMin="1" restAfterSec="0" restBetweenMin="0" restBetweenSec="4" sets="2"/>
-            <Exercise name="Crunches" pos="3" reps="30" restAfterMin="1" restAfterSec="0" restBetweenMin="0" restBetweenSec="5" sets="3"/>
+            <Exercise name="Pushups" pos="1" reps="30" restAfterMin="1" restAfterSec="0" restBetweenMin="0" restBetweenSec="30" sets="5"/>
+            <Exercise name="Pullups" pos="2" reps="15" restAfterMin="1" restAfterSec="0" restBetweenMin="0" restBetweenSec="30" sets="5"/>
+            <Exercise name="Crunches" pos="3" reps="30" restAfterMin="0" restAfterSec="0" restBetweenMin="0" restBetweenSec="30" sets="5"/>
         </Workout>
         <Workout dateCreated="062213" id="1" lastModified="062213" name="Workout 2">
             <Exercise name="Pushups" pos="0" reps="0" restAfterMin="1" restAfterSec="0" restBetweenMin="0" restBetweenSec="30" sets="4"/>

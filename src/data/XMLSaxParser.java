@@ -72,7 +72,25 @@ public class XMLSaxParser extends DefaultHandler {
                   throws SAXException {
 
     	if (qName.equalsIgnoreCase("Workout")) {
-    		// add it to the list
+    		//Calculate the total time of the workout.
+    		int totalWorkoutTime = 0;
+    		int numExercises = workout.getExerciseListSize();
+    		for (int i=0; i<numExercises; i++) {
+    			int numSets = workout.getExercise(i).getSets();
+    			int timePerSet = workout.getExercise(i).getRestBetween();
+    			int finalExercise = numExercises-1;
+    			
+    			//Only add rest time after exercise if its not the last exercise in the workout.
+    			int restTimeAfter = 0;
+    			if (i != finalExercise) {
+    				restTimeAfter = workout.getExercise(i).getRestAfter();
+    			}
+    			
+    			int exerciseTime = (numSets * timePerSet) + restTimeAfter;
+    			totalWorkoutTime += exerciseTime;
+    		}
+    		workout.setLengthInSecs(Integer.toString(totalWorkoutTime));
+    		//Add it to the list
     		workoutList.add(workout);
     	}
     }

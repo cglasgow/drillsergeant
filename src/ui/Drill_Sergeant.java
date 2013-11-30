@@ -1,7 +1,6 @@
 package ui;
 
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
@@ -43,7 +42,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.DropMode;
 import javax.swing.DefaultComboBoxModel;
-
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.beans.PropertyChangeListener;
@@ -51,7 +49,6 @@ import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import javax.swing.JInternalFrame;
 import javax.swing.JDesktopPane;
 import javax.swing.JLayeredPane;
@@ -68,14 +65,15 @@ public class Drill_Sergeant {
 	protected JFrame 			frmDrillSergeant;
 	private Preview 			frmPreview = new Preview();
 	private JList 				listWorkout;
-	private static JTextField 	txtCurrent;
-	private static JTextField 	txtCurrentSet;
-	private static JTextField 	txtTotalSets;
-	private static JTextField 	txtRepCount;
-	private static JTextField 	txtSetTimeLeft;
-	private static JTextField 	txtTotalTimeLeft;
-	private static JTextField 	txtNext;
-	private static JTextField 	txtWorkout;
+	private JTextField 			txtCurrent;
+	private JTextField 			txtCurrentSet;
+	private JTextField 			txtTotalSets;
+	private JTextField 			txtRepCount;
+	private JTextField 			txtSetTimeLeft;
+	private JTextField 			txtTotalTimeLeft;
+	private JTextField 			txtNext;
+	private JTextField 			txtWorkout;
+	private JProgressBar 		progressBar; 
 	private JLabel 				lblWorkoutTitle;
 	private JButton				btnPreview;
 	private JButton 			btnStart;
@@ -91,7 +89,7 @@ public class Drill_Sergeant {
 	private ImageIcon 			dialogIcon;
 	private Workout 			newWorkout;
 	private ActiveWorkout 		activeWorkout;
-	private Workout[] 			workouts = new Workout[50];		//Stores the array of Workout objects, creating a "workout list".
+	//private Workout[] 			workouts = new Workout[50];		//Stores the array of Workout objects, creating a "workout list".
 	private String 				workoutName = new String();
 	private XMLSaxParser 		handler = new XMLSaxParser();
 	private Boolean				isXMLParsed = false;
@@ -104,29 +102,6 @@ public class Drill_Sergeant {
 	private WorkoutTimerTask 	setTimeCountdownTask;
 	private Boolean 			isWorkoutRunning = false;
 	private Boolean 			isWorkoutPaused = false;
-	
-//	//************************************************************
-//	// main
-//	//		Launch the application.
-//	//************************************************************
-//	public static void main(String[] args) {
-//		try {
-//			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-//		} catch (Throwable e) {
-//			e.printStackTrace();
-//		}
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					Drill_Sergeant window = new Drill_Sergeant();
-//					window.frmDrillSergeant.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
-	
 
 	//************************************************************
 	// Drill_Sergeant
@@ -631,7 +606,7 @@ public class Drill_Sergeant {
 		txtCurrent = new JTextField();
 		txtCurrent.setHorizontalAlignment(SwingConstants.LEFT);
 		txtCurrent.setForeground(new Color(0, 153, 204));
-		txtCurrent.setFont(new Font("Tahoma", Font.BOLD, 24));
+		txtCurrent.setFont(new Font("Tahoma", Font.BOLD, 30));
 		txtCurrent.setText("");
 		txtCurrent.setEditable(false);
 		txtCurrent.setBounds(75, 48, 429, 57);
@@ -666,7 +641,7 @@ public class Drill_Sergeant {
 		txtCurrentSet = new JTextField();
 		txtCurrentSet.setEditable(false);
 		txtCurrentSet.setForeground(new Color(0, 153, 204));
-		txtCurrentSet.setFont(new Font("Tahoma", Font.BOLD, 24));
+		txtCurrentSet.setFont(new Font("Tahoma", Font.BOLD, 32));
 		txtCurrentSet.setHorizontalAlignment(SwingConstants.CENTER);
 		txtCurrentSet.setText("");
 		txtCurrentSet.setBounds(173, 167, 60, 57);
@@ -682,7 +657,7 @@ public class Drill_Sergeant {
 		//Total Sets
 		txtTotalSets = new JTextField();
 		txtTotalSets.setForeground(new Color(0, 153, 204));
-		txtTotalSets.setFont(new Font("Tahoma", Font.BOLD, 24));
+		txtTotalSets.setFont(new Font("Tahoma", Font.BOLD, 32));
 		txtTotalSets.setHorizontalAlignment(SwingConstants.CENTER);
 		txtTotalSets.setText("");
 		txtTotalSets.setEditable(false);
@@ -700,7 +675,7 @@ public class Drill_Sergeant {
 		txtRepCount.setForeground(new Color(0, 153, 204));
 		txtRepCount.setHorizontalAlignment(SwingConstants.CENTER);
 		txtRepCount.setText("");
-		txtRepCount.setFont(new Font("Tahoma", Font.BOLD, 48));
+		txtRepCount.setFont(new Font("Tahoma", Font.BOLD, 54));
 		txtRepCount.setEditable(false);
 		txtRepCount.setBounds(44, 253, 155, 52);
 		card4.add(txtRepCount);
@@ -716,7 +691,7 @@ public class Drill_Sergeant {
 		txtSetTimeLeft.setForeground(new Color(0, 153, 204));
 		txtSetTimeLeft.setHorizontalAlignment(SwingConstants.CENTER);
 		txtSetTimeLeft.setText("");
-		txtSetTimeLeft.setFont(new Font("Tahoma", Font.BOLD, 48));
+		txtSetTimeLeft.setFont(new Font("Tahoma", Font.BOLD, 54));
 		txtSetTimeLeft.setEditable(false);
 		txtSetTimeLeft.setColumns(10);
 		txtSetTimeLeft.setBounds(317, 253, 155, 52);
@@ -751,7 +726,9 @@ public class Drill_Sergeant {
 		//-------------
 		// Progress Bars
 		//-------------
-		JProgressBar progressBar = new JProgressBar();
+		progressBar = new JProgressBar();
+		progressBar.setFont(new Font("Tahoma", Font.BOLD, 14));
+		progressBar.setStringPainted(true);
 		progressBar.setBounds(44, 341, 428, 37);
 		card4.add(progressBar);
 		
@@ -1058,16 +1035,10 @@ public class Drill_Sergeant {
 	public void runWorkout() {
 		isWorkoutRunning = true;
 		Boolean areExercisesRemaining = true;
-		int totalTimeLeft = 43; //just for testing for now...
-		int setTimeLeft = activeWorkout.getExercise(0).getRestBetween();
+		//int totalTimeLeft = 43; //just for testing for now...
 		//int setTimeLeft = 3; //FOR TESTING
-		
-//		while (areExercisesRemaining) {
-//			areExercisesRemaining = loadNextExercise();
-//		}
-		
-		//System.out.println(activeWorkout.getLengthInSecs()); //lengthInSecs is currently null because it has not been computed and set.  This still needs to be done...
-		//int totalTimeLeft = Integer.parseInt(activeWorkout.getLengthInSecs());
+		int totalTimeLeft = Integer.parseInt(activeWorkout.getLengthInSecs());
+		int setTimeLeft = activeWorkout.getExercise(0).getRestBetween();
 		
 		masterTimer = new Timer();
 		setTimer = new Timer();
@@ -1185,5 +1156,16 @@ public class Drill_Sergeant {
 	//************************************************************
 	public void setTxtTotalTimeLeft(String theText) {
 		this.txtTotalTimeLeft.setText(theText);
+	}
+	
+	//************************************************************
+	// updateProgressBar
+	//************************************************************
+	public void updateProgressBar(int timeLeft) {
+		double dblPercentLeft = ((float)timeLeft / (float)Integer.parseInt(activeWorkout.getLengthInSecs()) * 100.0);
+		int intPercentLeft = (int) dblPercentLeft;
+		int currentPercent = 100 - intPercentLeft;
+		System.out.println("Current Progress: " + currentPercent + "%");
+		progressBar.setValue(currentPercent);
 	}
 }
