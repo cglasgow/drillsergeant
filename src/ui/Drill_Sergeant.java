@@ -148,6 +148,7 @@ public class Drill_Sergeant {
 		frmDrillSergeant.setTitle("Drill Sergeant");
 		frmDrillSergeant.setBounds(100, 100, 520, 600);
 		frmDrillSergeant.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmDrillSergeant.setLocationRelativeTo(null);
 		frmDrillSergeant.getContentPane().setLayout(null);
 		
 		//The main card panel containing all of the "cards" (screens) in the main application frame.
@@ -279,15 +280,6 @@ public class Drill_Sergeant {
 		listWorkout.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listWorkout.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		listWorkout.setBorder(new BevelBorder(BevelBorder.LOWERED, UIManager.getColor("InternalFrame.resizeIconShadow"), UIManager.getColor("InternalFrame.borderLight"), null, null));
-//		listWorkout.setModel(new AbstractListModel() {
-//			String[] values = new String[] {"LIST ITEM 1", "LIST ITEM 2", "LIST ITEM 3", "LIST ITEM 4", "LIST ITEM 5", "LIST ITEM 6", "LIST ITEM 7", "LIST ITEM 8", "LIST ITEM 9", "LIST ITEM 10", "LIST ITEM 11", "LIST ITEM 12", "LIST ITEM 13", "LIST ITEM 14", "LIST ITEM 15"};
-//			public int getSize() {
-//				return values.length;
-//			}
-//			public Object getElementAt(int index) {
-//				return values[index];
-//			}
-//		});
 		listWorkout.setModel(listModel);
 		
 		//-------------
@@ -996,6 +988,7 @@ public class Drill_Sergeant {
 		}
 		System.out.println(listModel.size());
 //		listWorkout.setModel(listModel);
+		listWorkout.setSelectedIndex(0);
 	}
 	
 	//************************************************************

@@ -13,6 +13,8 @@ import javax.swing.AbstractListModel;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import javax.swing.JTable;
+import javax.swing.UIManager;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Toolkit;
@@ -38,6 +40,11 @@ public class Preview extends JFrame {
 	//		Initialize the contents of the frame.
 	//************************************************************
 	public Preview() {
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
 		setType(Type.POPUP);
 		setTitle("Workout Preview");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Preview.class.getResource("/ui/resources/format-list-ordered_24x24.png")));
