@@ -7,9 +7,9 @@
             <Exercise name="Crunches" pos="3" reps="30" restAfterMin="0" restAfterSec="0" timeBetweenMin="0" timeBetweenSec="30" sets="5"/>
         </Workout>
         <Workout dateCreated="06/22/13" id="1" lastModified="07/10/13" name="Wooooorkout 2">
-            <Exercise name="Pushups" pos="0" reps="20" restAfterMin="0" restAfterSec="10" timeBetweenMin="0" timeBetweenSec="5" sets="2"/>
-            <Exercise name="Pullups" pos="1" reps="20" restAfterMin="0" restAfterSec="10" timeBetweenMin="0" timeBetweenSec="5" sets="2"/>
-            <Exercise name="Crunches" pos="2" reps="20" restAfterMin="0" restAfterSec="0" timeBetweenMin="0" timeBetweenSec="5" sets="2"/>
+            <Exercise name="Pushups" pos="0" reps="20" restAfterMin="0" restAfterSec="5" timeBetweenMin="0" timeBetweenSec="3" sets="2"/>
+            <Exercise name="Pullups" pos="1" reps="20" restAfterMin="0" restAfterSec="5" timeBetweenMin="0" timeBetweenSec="3" sets="2"/>
+            <Exercise name="Crunches" pos="2" reps="20" restAfterMin="0" restAfterSec="0" timeBetweenMin="0" timeBetweenSec="3" sets="2"/>
         </Workout>
         <Workout dateCreated="11/14/13" id="1" lastModified="11/20/13" name="Woooooooooorkout 3">
             <Exercise name="Pushups" pos="0" reps="0" restAfterMin="1" restAfterSec="0" timeBetweenMin="0" timeBetweenSec="30" sets="4"/>

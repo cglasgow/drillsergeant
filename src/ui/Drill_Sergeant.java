@@ -763,14 +763,36 @@ public class Drill_Sergeant {
 		
 		//End Workout
 		JButton btnEnd = new JButton("End Workout");
+		btnEnd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int choice = JOptionPane.showConfirmDialog(cards, "Are you sure you want to end this workout?", "End Workout", JOptionPane.YES_NO_OPTION);
+				if (choice == JOptionPane.YES_OPTION) {
+					resetWorkout();
+					swapView("card1");
+				} else {
+					//Do nothing except close dialog box.
+				}
+			}
+		});
 		btnEnd.setIcon(new ImageIcon(Drill_Sergeant.class.getResource("/ui/resources/dialog-disable_16x16.png")));
 		btnEnd.setBounds(384, 503, 120, 37);
 		card4.add(btnEnd);
 		
-		//Restart Workout
-		JButton btnRestart = new JButton("Restart Workout");
-		btnRestart.setBounds(10, 503, 120, 37);
-		card4.add(btnRestart);
+		//Reset Workout
+		JButton btnReset = new JButton("Reset");
+		btnReset.setIcon(new ImageIcon(Drill_Sergeant.class.getResource("/ui/resources/arrow-rotate-clockwise_16x16.png")));
+		btnReset.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int choice = JOptionPane.showConfirmDialog(cards, "Are you sure you want to reset this workout?", "Reset Workout", JOptionPane.YES_NO_OPTION);
+				if (choice == JOptionPane.YES_OPTION) {
+					resetWorkout();
+				} else {
+					//Do nothing except close dialog box.
+				}
+			}
+		});
+		btnReset.setBounds(10, 503, 120, 37);
+		card4.add(btnReset);
 		
 		//=============================================================================================================
 		// Card 5 - Settings
@@ -1084,6 +1106,45 @@ public class Drill_Sergeant {
 	}
 	
 	//************************************************************
+	// resetWorkout
+	//************************************************************
+	public void resetWorkout() {
+		//Kill timers.
+		masterTimer.cancel();
+		setTimer.cancel();
+		
+		//Reset GUI.
+		isWorkoutRunning = false;
+		isWorkoutPaused = false;
+		btnStart.setIcon(new ImageIcon(Drill_Sergeant.class.getResource("/ui/resources/stopwatch_start.png")));
+		btnStart.setText("START");
+		btnStart.setEnabled(true);
+		txtCurrent.setForeground(DS_BLUE);
+		txtCurrent.setText("");
+		txtNext.setText("");
+		txtCurrentSet.setText("");
+		txtTotalSets.setText("");
+		txtRepCount.setText("");
+		txtSetTimeLeft.setForeground(DS_BLUE);
+		txtSetTimeLeft.setText("");
+		txtTotalTimeLeft.setForeground(DS_BLUE);
+		txtTotalTimeLeft.setText("");
+		lblNextSetStarts.setText("Next Set Starts In:");
+		progressBar.setValue(0);
+		
+		//Re-instantiate the activeWorkout Object.
+		activeWorkout = new ActiveWorkout(newWorkout);
+	}
+	
+	//************************************************************
+	// endWorkout
+	//************************************************************
+	public void endWorkout() {
+		
+	}
+		
+		
+	//************************************************************
 	// loadNextExercise
 	//************************************************************
 	public Boolean loadNextExercise() {
@@ -1111,6 +1172,7 @@ public class Drill_Sergeant {
 			} else {
 				txtNext.setText("");
 			}
+			txtCurrent.setForeground(DS_BLUE);
 			txtCurrentSet.setText(Integer.toString(activeWorkout.getCurrentSet()));
 			txtTotalSets.setText(Integer.toString(activeWorkout.getExercise(index).getSets()));
 			txtRepCount.setText(Integer.toString(activeWorkout.getExercise(index).getReps()));
@@ -1119,8 +1181,12 @@ public class Drill_Sergeant {
 		} else {
 				areExercisesRemaining = false;
 				setTimer.cancel();
+				masterTimer.cancel();
 				txtTotalTimeLeft.setForeground(Color.RED);
-				System.out.println("WORKOUT COMPLETED.");
+				txtCurrent.setForeground(DS_BLUE);
+				txtCurrent.setText("Workout Completed!");
+				isWorkoutRunning = false;
+				btnStart.setEnabled(false);
 		}
 		return areExercisesRemaining;
 	}
@@ -1135,6 +1201,7 @@ public class Drill_Sergeant {
 			if (activeWorkout.getIsResting() == true) {
 				loadRestPeriod(activeWorkout.getExercise(index).getRestAfter());
 			} else {
+				lblNextSetStarts.setText("Next Set Starts In:");
 				loadNextExercise();
 			}
 		} else {
@@ -1167,6 +1234,12 @@ public class Drill_Sergeant {
 		setTimeCountdownTask = new WorkoutTimerTask(this, restTime, "REST");
 		setTimer.schedule(setTimeCountdownTask, 0, 1000);
 		txtSetTimeLeft.setForeground(Color.RED);
+		txtCurrent.setForeground(Color.RED);
+		txtCurrent.setText("RESTING...");
+		txtCurrentSet.setText("");
+		txtTotalSets.setText("");
+		txtRepCount.setText("");
+		lblNextSetStarts.setText("Next Exercise Starts In:");
 		activeWorkout.setIsResting(false);
 	}
 	
