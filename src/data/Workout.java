@@ -2,6 +2,8 @@ package data;
 
 import java.util.*; //For ArrayList
 
+import util.Format;
+
 
 
 public class Workout {
@@ -110,27 +112,12 @@ public class Workout {
 	//------------------------------
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
-		sb.append("Name: " + getName());
-		sb.append(" - ");
-		sb.append("Date Created: " + getDateCreated());
-		sb.append(" - ");
+		sb.append(getName() + "  -  ");
+		sb.append("Created: " + getDateCreated());
+		sb.append("   ");
 		sb.append("Last Modified: " + getLastModified());
+		sb.append("   ");
+		sb.append("Length: " + Format.toHHMMSS(Integer.parseInt(getLengthInSecs())));
 		return sb.toString();
 	}
-	
-	
-//	public void printExercise(int index) {
-//		System.out.print(exercises[index].getName());
-//		System.out.print("\n");
-//		System.out.print(exercises[index].getGraphicURL());
-//		System.out.print("\n");
-//		System.out.print(exercises[index].getSets());
-//		System.out.print("\n");
-//		System.out.print(exercises[index].getReps());
-//		System.out.print("\n");
-//		System.out.print(exercises[0].getRestBetween());
-//		System.out.print("\n");
-//		System.out.print(exercises[index].getRestAfter());
-//		System.out.print("\n---------------------\n");
-//	}
 }

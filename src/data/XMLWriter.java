@@ -57,18 +57,18 @@ public class XMLWriter {
 					String name 			= theHandler.getWorkout(i).getExercise(j).getName();
 					String sets 			= Integer.toString(theHandler.getWorkout(i).getExercise(j).getSets());
 					String reps				= Integer.toString(theHandler.getWorkout(i).getExercise(j).getPosition());
-					String restBetweenMin;
-					String restBetweenSec;
+					String timeBetweenMin;
+					String timeBetweenSec;
 					String restAfterMin;
 					String restAfterSec;
 					
-					int restBetweenTotalSec	= theHandler.getWorkout(i).getExercise(j).getRestBetween();
-					if (restBetweenTotalSec != 0) {
-						restBetweenMin	= Integer.toString(restBetweenTotalSec / 60);
-						restBetweenSec	= Integer.toString(restBetweenTotalSec % 60);
+					int timeBetweenTotalSec	= theHandler.getWorkout(i).getExercise(j).getTimeBetween();
+					if (timeBetweenTotalSec != 0) {
+						timeBetweenMin	= Integer.toString(timeBetweenTotalSec / 60);
+						timeBetweenSec	= Integer.toString(timeBetweenTotalSec % 60);
 					} else {
-						restBetweenMin	= "0";
-						restBetweenSec	= "0";
+						timeBetweenMin	= "0";
+						timeBetweenSec	= "0";
 					}
 					
 					int restAfterTotalSec	= theHandler.getWorkout(i).getExercise(j).getRestAfter();
@@ -84,8 +84,8 @@ public class XMLWriter {
 					elementExercise.setAttribute("name", name);
 					elementExercise.setAttribute("sets", sets);
 					elementExercise.setAttribute("reps", reps);
-					elementExercise.setAttribute("restBetweenMin", restBetweenMin);
-					elementExercise.setAttribute("restBetweenSec", restBetweenSec);
+					elementExercise.setAttribute("timeBetweenMin", timeBetweenMin);
+					elementExercise.setAttribute("timeBetweenSec", timeBetweenSec);
 					elementExercise.setAttribute("restAfterMin", restAfterMin);
 					elementExercise.setAttribute("restAfterSec", restAfterSec);
 				}

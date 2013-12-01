@@ -1,6 +1,9 @@
 package ui;
 
+import java.awt.Color;
 import java.util.TimerTask;
+
+import util.Format;
 
 public class WorkoutTimerTask extends TimerTask {
 	private int timeLeft;
@@ -15,14 +18,15 @@ public class WorkoutTimerTask extends TimerTask {
 	}
 	
 	public void run() {
-    	if (timerType == "MASTER")
+    	if (timerType == "MASTER") {
     		countDownTotalTime();
-    	else if (timerType == "SET")
+    	} else if (timerType == "SET" || timerType == "REST") {
     		countDownSetTime();
+    	}
     }
 	
     public void countDownSetTime() {
-    	stringTimeLeft = this.toMSS(timeLeft);
+    	stringTimeLeft = Format.toMSS(timeLeft);
     	dsRef.setTxtSetTimeLeft(stringTimeLeft);
     	timeLeft--;
     	if (timeLeft < 0) {
@@ -32,7 +36,7 @@ public class WorkoutTimerTask extends TimerTask {
     }
     
     public void countDownTotalTime() {
-    	stringTimeLeft = this.toHHMMSS(timeLeft);
+    	stringTimeLeft = Format.toHHMMSS(timeLeft);
     	dsRef.setTxtTotalTimeLeft(stringTimeLeft);
     	dsRef.updateProgressBar(timeLeft);
     	timeLeft--;
@@ -40,46 +44,8 @@ public class WorkoutTimerTask extends TimerTask {
     		this.cancel();
     	}
     }
+    
     public int getTimeLeft() {
     	return timeLeft;
-    }
-    
-    public String toHHMMSS (int totalTimeInSecs) {
-    	int totalMinutes = totalTimeInSecs/60;
-    	
-    	int secs	= totalTimeInSecs % 60;
-    	int minutes = totalMinutes % 60;
-    	int hours	= totalMinutes/60;
-    	
-    	//System.out.println("hours = " + hours + " minutes = " + minutes + " secs = " + secs);
-    	String HH 	= Integer.toString(hours);
-    	String MM	= Integer.toString(minutes);
-    	String SS	= Integer.toString(secs);
-
-    	if (HH.length() == 1) {
-    		HH = "0" + HH; 
-    	}
-    	if (MM.length() == 1) {
-    		MM = "0" + MM; 
-    	}
-    	if (SS.length() == 1) {
-    		SS = "0" + SS; 
-    	}
-    	System.out.println(HH + ":" + MM + ":" + SS);
-    	return HH + ":" + MM + ":" + SS;
-    }
-    
-    public String toMSS (int totalTimeInSecs) {
-    	int minutes = totalTimeInSecs/60;
-    	int secs	= totalTimeInSecs % 60;
-
-    	String M	= Integer.toString(minutes);
-    	String SS	= Integer.toString(secs);
-
-    	if (SS.length() == 1) {
-    		SS = "0" + SS; 
-    	}
-    	System.out.println(M + ":" + SS);
-    	return M + ":" + SS;
     }
 }

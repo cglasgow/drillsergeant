@@ -6,7 +6,7 @@ public class Exercise {
 	private int position;			//The position of the exercise relative to the other exercises in the workout.
 	private int sets;
 	private int reps;
-	private int restBetweenSets;	//in seconds
+	private int timeBetweenSets;	//in seconds
 	private int restAfterExercise;	//in seconds
 	
 	//---------------------------------------
@@ -32,10 +32,10 @@ public class Exercise {
 		reps = Integer.parseInt(numReps);
 	}
 	
-	public void setRestBetween(String minutes, String seconds) {
+	public void setTimeBetween(String minutes, String seconds) {
 		int intMinutes = Integer.parseInt(minutes);
 		int intSeconds = Integer.parseInt(seconds);
-		restBetweenSets = (intMinutes * 60) + intSeconds;
+		timeBetweenSets = (intMinutes * 60) + intSeconds;
 	}
 	
 	public void setRestAfter(String minutes, String seconds) {
@@ -66,8 +66,8 @@ public class Exercise {
 		return reps;
 	}
 	
-	public int getRestBetween() {
-		return restBetweenSets;
+	public int getTimeBetween() {
+		return timeBetweenSets;
 	}
 	
 	public int getRestAfter() {

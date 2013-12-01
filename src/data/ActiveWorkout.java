@@ -12,6 +12,7 @@ public class ActiveWorkout extends Workout {
 	private String currentExerciseName;
 	private String nextExerciseName;
 	private int currentSet = 1;
+	private boolean isResting = false;
 	private int setTotal;
 	private int reps;
 	private int setTimeLeft;
@@ -41,6 +42,10 @@ public class ActiveWorkout extends Workout {
 		currentSet = setNum;
 	}
 	
+	public void setIsResting(boolean val) {
+		isResting = val;
+	}
+	
 	public int getTimeLeft() {
 		return workoutTimeLeft;
 	}
@@ -51,5 +56,9 @@ public class ActiveWorkout extends Workout {
 	
 	public int getCurrentSet() {
 		return currentSet;
+	}
+	
+	public boolean getIsResting() {
+		return isResting;
 	}
 }

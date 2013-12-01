@@ -73,7 +73,8 @@ public class Drill_Sergeant {
 	private JTextField 			txtTotalTimeLeft;
 	private JTextField 			txtNext;
 	private JTextField 			txtWorkout;
-	private JProgressBar 		progressBar; 
+	private JProgressBar 		progressBar;
+	private JLabel 				lblNextSetStarts;
 	private JLabel 				lblWorkoutTitle;
 	private JButton				btnPreview;
 	private JButton 			btnStart;
@@ -102,6 +103,7 @@ public class Drill_Sergeant {
 	private WorkoutTimerTask 	setTimeCountdownTask;
 	private Boolean 			isWorkoutRunning = false;
 	private Boolean 			isWorkoutPaused = false;
+	private final Color			DS_BLUE = new Color(51, 153, 255);
 
 	//************************************************************
 	// Drill_Sergeant
@@ -393,7 +395,7 @@ public class Drill_Sergeant {
 		cbReps.setBounds(212, 219, 50, 20);
 		panelTitleBorderCard3.add(cbReps);
 		
-		//Rest time between sets
+		//Time between sets
 		cbBetweenMin = new JComboBox();
 		cbBetweenMin.setModel(new DefaultComboBoxModel(new String[] {"0", "1", "2", "3", "4", "5"}));
 		cbBetweenMin.setEditable(true);
@@ -457,8 +459,8 @@ public class Drill_Sergeant {
 		panelTitleBorderCard3.add(lblNewLabel);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 12));
 		
-		//Rest Time Between Sets
-		JLabel lblTimeBetweenSets = new JLabel("Rest Time Between Sets:");
+		//Time Between Sets
+		JLabel lblTimeBetweenSets = new JLabel("Time Between Sets:");
 		lblTimeBetweenSets.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblTimeBetweenSets.setBounds(43, 281, 159, 14);
 		panelTitleBorderCard3.add(lblTimeBetweenSets);
@@ -506,7 +508,7 @@ public class Drill_Sergeant {
 				newExercise.setGraphicURL("URL GOES HERE");
 				newExercise.setSets((String)cbSets.getSelectedItem());
 				newExercise.setReps((String)cbReps.getSelectedItem());
-				newExercise.setRestBetween((String)cbBetweenMin.getSelectedItem(), (String)cbBetweenSec.getSelectedItem());
+				newExercise.setTimeBetween((String)cbBetweenMin.getSelectedItem(), (String)cbBetweenSec.getSelectedItem());
 				newExercise.setRestAfter((String)cbAfterMin.getSelectedItem(), (String)cbAfterSec.getSelectedItem());
 				newWorkout.addExercise(newExercise);
 				int previewIndex = frmPreview.add(newExercise);
@@ -682,7 +684,8 @@ public class Drill_Sergeant {
 		txtRepCount.setColumns(10);
 		
 		//Set Time Left
-		JLabel lblNextSetStarts = new JLabel("Next Set Starts In:");
+		lblNextSetStarts = new JLabel("Next Set In:");
+		lblNextSetStarts.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNextSetStarts.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblNextSetStarts.setBounds(337, 233, 120, 20);
 		card4.add(lblNextSetStarts);
@@ -1038,7 +1041,7 @@ public class Drill_Sergeant {
 		//int totalTimeLeft = 43; //just for testing for now...
 		//int setTimeLeft = 3; //FOR TESTING
 		int totalTimeLeft = Integer.parseInt(activeWorkout.getLengthInSecs());
-		int setTimeLeft = activeWorkout.getExercise(0).getRestBetween();
+		int setTimeLeft = activeWorkout.getExercise(0).getTimeBetween();
 		
 		masterTimer = new Timer();
 		setTimer = new Timer();
@@ -1092,7 +1095,7 @@ public class Drill_Sergeant {
 			activeWorkout.setCurrentExerciseIndex(index);
 			
 			//Reset the Set timer.
-			int setTimeLeft = activeWorkout.getExercise(index).getRestBetween();
+			int setTimeLeft = activeWorkout.getExercise(index).getTimeBetween();
 			System.out.println("setTimeLeft = " + setTimeLeft);
 			setTimer.cancel();
 			setTimer = new Timer();
@@ -1111,10 +1114,12 @@ public class Drill_Sergeant {
 			txtCurrentSet.setText(Integer.toString(activeWorkout.getCurrentSet()));
 			txtTotalSets.setText(Integer.toString(activeWorkout.getExercise(index).getSets()));
 			txtRepCount.setText(Integer.toString(activeWorkout.getExercise(index).getReps()));
+			txtSetTimeLeft.setForeground(DS_BLUE);
 			areExercisesRemaining = true;
 		} else {
 				areExercisesRemaining = false;
 				setTimer.cancel();
+				txtTotalTimeLeft.setForeground(Color.RED);
 				System.out.println("WORKOUT COMPLETED.");
 		}
 		return areExercisesRemaining;
@@ -1127,7 +1132,11 @@ public class Drill_Sergeant {
 		int index = activeWorkout.getCurrentExerciseIndex();
 		//Check if the current set is the final set and load the next exercise if so.  Otherwise, continue loading the next set.
 		if (activeWorkout.getCurrentSet() == activeWorkout.getExercise(index).getSets()) {
-			loadNextExercise();
+			if (activeWorkout.getIsResting() == true) {
+				loadRestPeriod(activeWorkout.getExercise(index).getRestAfter());
+			} else {
+				loadNextExercise();
+			}
 		} else {
 			int currentSet = activeWorkout.getCurrentSet();
 			activeWorkout.setCurrentSet(currentSet+1);
@@ -1137,25 +1146,42 @@ public class Drill_Sergeant {
 			txtCurrentSet.setText(Integer.toString(activeWorkout.getCurrentSet()));
 			
 			//Reset the Set timer.
-			int setTimeLeft = activeWorkout.getExercise(index).getRestBetween();
+			int setTimeLeft = activeWorkout.getExercise(index).getTimeBetween();
 			setTimeCountdownTask = new WorkoutTimerTask(this, setTimeLeft, "SET");
 			setTimer.schedule(setTimeCountdownTask, 0, 1000);
+			
+			//Enable post-exercise resting period if applicable.
+			if (activeWorkout.getCurrentSet() == activeWorkout.getExercise(index).getSets()) {
+				if (activeWorkout.getExercise(index).getTimeBetween() > 0) {
+					activeWorkout.setIsResting(true);
+				}
+			}
 		}
 	}
 	
+	//************************************************************
+	// loadRestPeriod
+	//************************************************************
+	public void loadRestPeriod(int restTime) {
+		//Reset the Set timer.
+		setTimeCountdownTask = new WorkoutTimerTask(this, restTime, "REST");
+		setTimer.schedule(setTimeCountdownTask, 0, 1000);
+		txtSetTimeLeft.setForeground(Color.RED);
+		activeWorkout.setIsResting(false);
+	}
 	
 	//************************************************************
 	// setTxtSetTimeLeft
 	//************************************************************
 	public void setTxtSetTimeLeft(String theText) {
-		this.txtSetTimeLeft.setText(theText);
+		txtSetTimeLeft.setText(theText);
 	}
 	
 	//************************************************************
 	// setTxtTotalTimeLeft
 	//************************************************************
 	public void setTxtTotalTimeLeft(String theText) {
-		this.txtTotalTimeLeft.setText(theText);
+		txtTotalTimeLeft.setText(theText);
 	}
 	
 	//************************************************************

@@ -127,13 +127,13 @@ public class Preview extends JFrame {
 		String name = theExercise.getName();
 		int sets = theExercise.getSets();
 		int reps = theExercise.getReps();
-		int restBetweenSets = theExercise.getRestBetween();
+		int timeBetweenSets = theExercise.getTimeBetween();
 		int restAfterExercise = theExercise.getRestAfter();
 		
 		DefaultTableModel model = (DefaultTableModel)table.getModel();
 		int index = model.getRowCount();
 		int position = index + 1;
-		model.addRow(new Object[]{position, name, sets, reps, restBetweenSets, restAfterExercise});
+		model.addRow(new Object[]{position, name, sets, reps, timeBetweenSets, restAfterExercise});
 		return index;
 	}
 	

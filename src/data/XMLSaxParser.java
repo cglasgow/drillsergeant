@@ -55,7 +55,7 @@ public class XMLSaxParser extends DefaultHandler {
         	   exercise.setPosition(Integer.parseInt(attributes.getValue("pos")));
         	   exercise.setReps(attributes.getValue("reps"));
         	   exercise.setSets(attributes.getValue("sets"));
-        	   exercise.setRestBetween(attributes.getValue("restBetweenMin"), attributes.getValue("restBetweenSec"));
+        	   exercise.setTimeBetween(attributes.getValue("timeBetweenMin"), attributes.getValue("timeBetweenSec"));
         	   exercise.setRestAfter(attributes.getValue("restAfterMin"), attributes.getValue("restAfterSec"));
         	   workout.addExercise(exercise);
            } else if (qName.equalsIgnoreCase("Settings")) {
@@ -77,18 +77,12 @@ public class XMLSaxParser extends DefaultHandler {
     		int numExercises = workout.getExerciseListSize();
     		for (int i=0; i<numExercises; i++) {
     			int numSets = workout.getExercise(i).getSets();
-    			int timePerSet = workout.getExercise(i).getRestBetween();
-    			int finalExercise = numExercises-1;
-    			
-    			//Only add rest time after exercise if its not the last exercise in the workout.
-    			int restTimeAfter = 0;
-    			if (i != finalExercise) {
-    				restTimeAfter = workout.getExercise(i).getRestAfter();
-    			}
-    			
+    			int timePerSet = workout.getExercise(i).getTimeBetween();
+    			int restTimeAfter = workout.getExercise(i).getRestAfter();
     			int exerciseTime = (numSets * timePerSet) + restTimeAfter;
     			totalWorkoutTime += exerciseTime;
     		}
+    		System.out.println(totalWorkoutTime);
     		workout.setLengthInSecs(Integer.toString(totalWorkoutTime));
     		//Add it to the list
     		workoutList.add(workout);
