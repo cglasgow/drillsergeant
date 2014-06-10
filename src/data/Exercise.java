@@ -8,6 +8,7 @@ public class Exercise {
 	private int reps;
 	private int timeBetweenSets;	//in seconds
 	private int restAfterExercise;	//in seconds
+	private int totalTime;				//in seconds
 	
 	//---------------------------------------
 	//SET Functions
@@ -43,6 +44,11 @@ public class Exercise {
 		int intSeconds = Integer.parseInt(seconds);
 		restAfterExercise = (intMinutes * 60) + intSeconds;
 	}
+	
+	public void setTotalTime() {
+		totalTime = (timeBetweenSets * sets) + restAfterExercise;
+	}
+	
 	//---------------------------------------
 	//GET Functions
 	//---------------------------------------
@@ -72,5 +78,9 @@ public class Exercise {
 	
 	public int getRestAfter() {
 		return restAfterExercise;
+	}
+	
+	public int getTotalTime() {
+		return totalTime;
 	}
 }

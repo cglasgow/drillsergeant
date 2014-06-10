@@ -1,21 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <UserConfig>
     <Workouts>
-        <Workout dateCreated="05/18/13" id="0" lastModified="05/18/13" name="Workout 1">
-            <Exercise name="Pushups" pos="1" reps="30" restAfterMin="1" restAfterSec="0" timeBetweenMin="0" timeBetweenSec="30" sets="5"/>
-            <Exercise name="Pullups" pos="2" reps="15" restAfterMin="1" restAfterSec="0" timeBetweenMin="0" timeBetweenSec="30" sets="5"/>
-            <Exercise name="Crunches" pos="3" reps="30" restAfterMin="0" restAfterSec="0" timeBetweenMin="0" timeBetweenSec="30" sets="5"/>
+        <Workout dateCreated="06/10/2014 12:49:56" id="" lastModified="06/10/2014 12:50:13" name="charles 1">
+            <Exercise name="Pushups" pos="0" reps="0" restAfterMin="0" restAfterSec="0" sets="10" timeBetweenMin="0" timeBetweenSec="0"/>
         </Workout>
-        <Workout dateCreated="06/22/13" id="1" lastModified="07/10/13" name="Wooooorkout 2">
-            <Exercise name="Pushups" pos="0" reps="20" restAfterMin="0" restAfterSec="5" timeBetweenMin="0" timeBetweenSec="3" sets="2"/>
-            <Exercise name="Pullups" pos="1" reps="20" restAfterMin="0" restAfterSec="5" timeBetweenMin="0" timeBetweenSec="3" sets="2"/>
-            <Exercise name="Crunches" pos="2" reps="20" restAfterMin="0" restAfterSec="0" timeBetweenMin="0" timeBetweenSec="3" sets="2"/>
-        </Workout>
-        <Workout dateCreated="11/14/13" id="1" lastModified="11/20/13" name="Woooooooooorkout 3">
-            <Exercise name="Pushups" pos="0" reps="0" restAfterMin="1" restAfterSec="0" timeBetweenMin="0" timeBetweenSec="30" sets="4"/>
-            <Exercise name="Pullups" pos="1" reps="1" restAfterMin="1" restAfterSec="0" timeBetweenMin="0" timeBetweenSec="20" sets="2"/>
-            <Exercise name="Crunches" pos="2" reps="2" restAfterMin="1" restAfterSec="0" timeBetweenMin="0" timeBetweenSec="10" sets="3"/>
-        </Workout>
+        <Workout dateCreated="06/10/2014 12:51:35" id="" lastModified="06/10/2014 12:52:04" name="charles 2"/>
     </Workouts>
     <Settings>
         <Sound value="off"/>

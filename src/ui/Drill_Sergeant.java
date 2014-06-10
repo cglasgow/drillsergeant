@@ -93,7 +93,7 @@ public class Drill_Sergeant {
 	//private Workout[] 			workouts = new Workout[50];		//Stores the array of Workout objects, creating a "workout list".
 	private String 				workoutName = new String();
 	private XMLSaxParser 		handler = new XMLSaxParser();
-	private Boolean				isXMLParsed = false;
+	private Boolean				xmlNeedsParsing = true;
 	private DefaultListModel 	listModel = new DefaultListModel();
 	private Timer 				masterTimer;
 	private Timer 				setTimer;
@@ -156,11 +156,13 @@ public class Drill_Sergeant {
 		btnOpen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					if (isXMLParsed == false) {
+					if (xmlNeedsParsing) {
+						handler.clearWorkoutList();
 						parseXML("config/user_config.xml");
-						isXMLParsed = true;
-						displayWorkoutList(handler);
-					}					
+						xmlNeedsParsing = false;
+					}
+					clearWorkoutList();
+					displayWorkoutList(handler);
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -289,8 +291,8 @@ public class Drill_Sergeant {
 				handler.clearWorkoutList();
 				//Parse the newly written xml.
 				try {
-					clearWorkoutList(); //Clear the JList containing the workouts.
 					parseXML("config/user_config.xml");
+					clearWorkoutList(); //Clear the JList containing the workouts.
 					displayWorkoutList(handler);
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
@@ -510,7 +512,9 @@ public class Drill_Sergeant {
 				newExercise.setReps((String)cbReps.getSelectedItem());
 				newExercise.setTimeBetween((String)cbBetweenMin.getSelectedItem(), (String)cbBetweenSec.getSelectedItem());
 				newExercise.setRestAfter((String)cbAfterMin.getSelectedItem(), (String)cbAfterSec.getSelectedItem());
+				newExercise.setTotalTime();
 				newWorkout.addExercise(newExercise);
+				newWorkout.setLengthInSecs(Integer.toString(newExercise.getTotalTime()));
 				int previewIndex = frmPreview.add(newExercise);
 				newExercise.setPosition(previewIndex);
 				ImageIcon okIcon = new ImageIcon(Drill_Sergeant.class.getResource("/ui/resources/dialog-ok-apply-5_32x32.png"));
@@ -564,11 +568,23 @@ public class Drill_Sergeant {
 						null, options, options[0]);
 				
 				if (choice == JOptionPane.NO_OPTION) {
+					newWorkout.setLengthInSecs(Integer.toString(newWorkout.calculateLengthInSecs()));
 					newWorkout.save(handler);
+					xmlNeedsParsing = true; //Set to true so that the xml will be re-parsed before the Workout List is opened again.
 					loadWorkout();
 					swapView("card4");
 				} else if (choice == JOptionPane.YES_OPTION) {
 					newWorkout.save(handler);
+					try {
+						handler.clearWorkoutList();
+						parseXML("config/user_config.xml");
+						xmlNeedsParsing = false;
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					clearWorkoutList();
+					displayWorkoutList(handler);
 					swapView("card1");
 				} else if (choice == JOptionPane.CANCEL_OPTION) {
 					//do nothing except close dialog box
@@ -902,6 +918,19 @@ public class Drill_Sergeant {
 		
 		JMenuItem mitemAbout = new JMenuItem("About");
 		mHelp.add(mitemAbout);
+		
+		//=============================================================================================================
+		//Other initialization
+		//=============================================================================================================
+		//Parse user_config.xml
+		try {
+			parseXML("config/user_config.xml");
+			xmlNeedsParsing = false;
+			displayWorkoutList(handler);					
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	} 
 	//End of initialize()
 	

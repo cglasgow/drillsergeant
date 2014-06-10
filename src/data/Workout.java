@@ -1,6 +1,9 @@
 package data;
 
-import java.util.*; //For ArrayList
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 
 import util.Format;
 
@@ -19,6 +22,10 @@ public class Workout {
 	
 	public Workout(String theName) {
 		name = theName;
+		DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
+		Date date = new Date();
+		String dateString = dateFormat.format(date);
+		setDateCreated(dateString);
 	}
 
 	//------------------------------
@@ -44,8 +51,8 @@ public class Workout {
 		return dateCreated;
 	}
 	
-	public void setDateCreated(String dateCreated) {
-		this.dateCreated = dateCreated;
+	public void setDateCreated(String date) {
+		this.dateCreated = date;
 	}
 	
 	public String getLastModified() {
@@ -64,7 +71,22 @@ public class Workout {
 		this.lengthInSecs = lengthInSecs;
 	}
 	
+	public int calculateLengthInSecs() {
+		int totalLength = 0;
+		for (int i=0; i <= this.exercises.size(); i++) {
+			totalLength += this.getExercise(i).getTotalTime();
+		}
+		return totalLength;
+	}
+	
 	public void save(XMLSaxParser theHandler) {
+		//Update the "Last Modified" date.
+		DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
+		Date date = new Date();
+		String dateString = dateFormat.format(date);
+		setLastModified(dateString);
+		
+		//Save
 		theHandler.addToWorkoutList(this);
 		//Create a new XML file with the updated data.
 		XMLWriter theXMLWriter = new XMLWriter();
