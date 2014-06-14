@@ -56,7 +56,7 @@ public class XMLWriter {
 					String pos 				= Integer.toString(theHandler.getWorkout(i).getExercise(j).getPosition());
 					String name 			= theHandler.getWorkout(i).getExercise(j).getName();
 					String sets 			= Integer.toString(theHandler.getWorkout(i).getExercise(j).getSets());
-					String reps				= Integer.toString(theHandler.getWorkout(i).getExercise(j).getPosition());
+					String reps				= Integer.toString(theHandler.getWorkout(i).getExercise(j).getReps());
 					String timeBetweenMin;
 					String timeBetweenSec;
 					String restAfterMin;

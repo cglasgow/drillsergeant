@@ -40,16 +40,16 @@ public class Preview extends JFrame {
 	//		Initialize the contents of the frame.
 	//************************************************************
 	public Preview() {
+		setType(Type.POPUP);
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
-		setType(Type.POPUP);
 		setTitle("Workout Preview");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Preview.class.getResource("/ui/resources/format-list-ordered_24x24.png")));
-		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(0, 0, 450, 450);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		setBounds(0, 0, 450, 380);
 		contentPane = new JPanel();
 //		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 //		contentPane.setLayout(new BorderLayout(0, 0));
@@ -99,28 +99,6 @@ public class Preview extends JFrame {
 		table.getColumnModel().getColumn(5).setResizable(false);
 		table.getColumnModel().getColumn(5).setPreferredWidth(60);
 		scrollPane.setViewportView(table);
-		
-		JButton btnDelete = new JButton("  Delete");
-		btnDelete.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				delete();
-			}
-		});
-		btnDelete.setIcon(new ImageIcon(Preview.class.getResource("/ui/resources/edit-delete-2.png")));
-		btnDelete.setName("");
-		btnDelete.setBounds(10, 345, 139, 56);
-		contentPane.add(btnDelete);
-		
-		JButton btnClose = new JButton("Close");
-		btnClose.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				setVisible(false);
-			}
-		});
-		btnClose.setIcon(new ImageIcon(Preview.class.getResource("/ui/resources/dialog-cancel-3.png")));
-		btnClose.setName("");
-		btnClose.setBounds(285, 345, 139, 56);
-		contentPane.add(btnClose);
 	}
 		
 	public int add(Exercise theExercise) {
@@ -137,17 +115,16 @@ public class Preview extends JFrame {
 		return index;
 	}
 	
-	public void delete() {
-		int[] selectedIndexes = table.getSelectedRows();
-		//Delete all selected rows.
-		for (int i=0; i < selectedIndexes.length; i++) {
-			System.out.print("\n" + selectedIndexes[i] + "\n");
+	public int delete() {
+		int selectedIndex = table.getSelectedRow();
+		if (selectedIndex != -1) {
 			model = (DefaultTableModel)table.getModel();
-			model.removeRow(selectedIndexes[i]);
+			model.removeRow(selectedIndex);
+			//Set the new position for each row, so they remain in order.
+			for (int i=0; i < model.getRowCount(); i++) {
+				model.setValueAt(i+1, i, 0);
+			}
 		}
-		//Set the new position for each row, so they remain in order.
-		for (int i=0; i < model.getRowCount(); i++) {
-			model.setValueAt(i+1, i, 0);
-		}
+		return selectedIndex;
 	}
 }

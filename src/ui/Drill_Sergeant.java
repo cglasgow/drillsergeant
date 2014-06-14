@@ -5,6 +5,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Point;
+
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -79,6 +81,7 @@ public class Drill_Sergeant {
 	private JLabel 				lblWorkoutTitle;
 	private JButton				btnPreview;
 	private JButton 			btnStart;
+	private JButton				btnDelete2;
 	private JComboBox 			cbName;
 	private JComboBox 			cbSets;
 	private JComboBox 			cbReps;
@@ -89,6 +92,7 @@ public class Drill_Sergeant {
 	private CardLayout 			cardlayout = new CardLayout();
 	private JPanel 				cards = new JPanel(cardlayout);
 	private ImageIcon 			dialogIcon;
+	private	ImageIcon 			okIcon = new ImageIcon(Drill_Sergeant.class.getResource("/ui/resources/dialog-ok-apply-5_32x32.png"));;
 	private Workout 			newWorkout;
 	private ActiveWorkout 		activeWorkout;
 	//private Workout[] 			workouts = new Workout[50];		//Stores the array of Workout objects, creating a "workout list".
@@ -189,6 +193,7 @@ public class Drill_Sergeant {
 				if (workoutName != null) {
 					txtWorkout.setText(workoutName);
 					swapView("card3");
+					togglePreviewWindow();
 				}
 			}
 		});
@@ -518,12 +523,29 @@ public class Drill_Sergeant {
 				newWorkout.setLengthInSecs(Integer.toString(newExercise.getTotalTime()));
 				int previewIndex = frmPreview.add(newExercise);
 				newExercise.setPosition(previewIndex);
-				ImageIcon okIcon = new ImageIcon(Drill_Sergeant.class.getResource("/ui/resources/dialog-ok-apply-5_32x32.png"));
+				//ImageIcon okIcon = new ImageIcon(Drill_Sergeant.class.getResource("/ui/resources/dialog-ok-apply-5_32x32.png"));
 				JOptionPane.showMessageDialog(cards, "Exercise added!", "Notification", JOptionPane.INFORMATION_MESSAGE, okIcon);
 			}
 		});
 		btnAdd.setIcon(new ImageIcon(Drill_Sergeant.class.getResource("/ui/resources/edit-add-2_16x16.png")));
 		btnAdd.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		
+		//Delete
+		btnDelete2 = new JButton("Delete");
+		btnDelete2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int index = frmPreview.delete();
+				if (index != -1) {
+					newWorkout.deleteExercise(index);
+				} else {
+					JOptionPane.showMessageDialog(cards, "Please select an exercise to Delete from the Workout Preview window.", "Notification", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+		btnDelete2.setIcon(new ImageIcon(Drill_Sergeant.class.getResource("/ui/resources/edit-delete-2_16x16.png")));
+		btnDelete2.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		btnDelete2.setBounds(386, 262, 98, 39);
+		panelTitleBorderCard3.add(btnDelete2);
 		
 		//Cancel
 		JButton btnCancel = new JButton("Cancel");
@@ -533,6 +555,8 @@ public class Drill_Sergeant {
 				if (choice == JOptionPane.YES_OPTION) {
 					resetEditScreen();
 					resetPreview();
+					frmPreview.setVisible(false);
+					btnDelete2.setVisible(false);
 					swapView("card1");
 				} else {
 					//Do nothing except close dialog box.
@@ -571,6 +595,8 @@ public class Drill_Sergeant {
 				
 				if (choice == JOptionPane.NO_OPTION) {
 					resetPreview();
+					frmPreview.setVisible(false);
+					btnDelete2.setVisible(false);
 					newWorkout.setLengthInSecs(Integer.toString(newWorkout.calculateLengthInSecs()));
 					newWorkout.save(handler);
 					xmlNeedsParsing = true; //Set to true so that the xml will be re-parsed before the Workout List is opened again.
@@ -578,6 +604,8 @@ public class Drill_Sergeant {
 					swapView("card4");
 				} else if (choice == JOptionPane.YES_OPTION) {
 					resetPreview();
+					frmPreview.setVisible(false);
+					btnDelete2.setVisible(false);
 					newWorkout.save(handler);
 					try {
 						handler.clearWorkoutList();
@@ -980,10 +1008,16 @@ public class Drill_Sergeant {
 	//************************************************************
 	public void togglePreviewWindow() {
 		if (frmPreview.isVisible() == false) {
+			//First, center the frame on the main application window.
 			frmPreview.setLocationRelativeTo(frmDrillSergeant);
+			Point location = new Point(frmPreview.getLocation());
+			location.x += 500;
+			frmPreview.setLocation(location);
 			frmPreview.setVisible(true);
+			btnDelete2.setVisible(true);
 		} else {
 			frmPreview.setVisible(false);
+			btnDelete2.setVisible(false);
 		}
 	}
 	
@@ -1090,6 +1124,8 @@ public class Drill_Sergeant {
 			swapView("card4");
 		} else if (callingBtnName == "btnEdit") {
 			swapView("card3");
+			togglePreviewWindow();
+			
 		}
 	}
 	

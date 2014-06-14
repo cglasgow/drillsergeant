@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <UserConfig>
     <Workouts>
-        <Workout dateCreated="06/10/2014 12:49:56" id="" lastModified="06/10/2014 12:50:13" name="charles 1">
-            <Exercise name="Pushups" pos="0" reps="0" restAfterMin="0" restAfterSec="0" sets="10" timeBetweenMin="0" timeBetweenSec="0"/>
-        </Workout>
-        <Workout dateCreated="06/13/2014 09:31:25" id="" lastModified="06/13/2014 09:32:02" name="charles 2">
-            <Exercise name="Crunches" pos="3" reps="3" restAfterMin="0" restAfterSec="0" sets="5" timeBetweenMin="1" timeBetweenSec="0"/>
+        <Workout dateCreated="06/14/2014 01:33:30" id="" lastModified="06/14/2014 05:26:08" name="charles">
+            <Exercise name="Pushups" pos="0" reps="30" restAfterMin="0" restAfterSec="0" sets="5" timeBetweenMin="2" timeBetweenSec="0"/>
+            <Exercise name="Pullups" pos="1" reps="12" restAfterMin="0" restAfterSec="0" sets="3" timeBetweenMin="2" timeBetweenSec="0"/>
         </Workout>
     </Workouts>
     <Settings>
