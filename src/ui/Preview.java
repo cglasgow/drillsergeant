@@ -32,8 +32,8 @@ import java.awt.ComponentOrientation;
 public class Preview extends JFrame {
 	
 	private JPanel contentPane;
-	private JTable table;
-	private DefaultTableModel model;
+	protected JTable table;
+	protected DefaultTableModel model;
 	
 	//************************************************************
 	// initialize
@@ -122,7 +122,7 @@ public class Preview extends JFrame {
 		btnClose.setBounds(285, 345, 139, 56);
 		contentPane.add(btnClose);
 	}
-	
+		
 	public int add(Exercise theExercise) {
 		String name = theExercise.getName();
 		int sets = theExercise.getSets();
@@ -130,7 +130,7 @@ public class Preview extends JFrame {
 		int timeBetweenSets = theExercise.getTimeBetween();
 		int restAfterExercise = theExercise.getRestAfter();
 		
-		DefaultTableModel model = (DefaultTableModel)table.getModel();
+		model = (DefaultTableModel)table.getModel();
 		int index = model.getRowCount();
 		int position = index + 1;
 		model.addRow(new Object[]{position, name, sets, reps, timeBetweenSets, restAfterExercise});
@@ -139,13 +139,15 @@ public class Preview extends JFrame {
 	
 	public void delete() {
 		int[] selectedIndexes = table.getSelectedRows();
+		//Delete all selected rows.
 		for (int i=0; i < selectedIndexes.length; i++) {
 			System.out.print("\n" + selectedIndexes[i] + "\n");
 			model = (DefaultTableModel)table.getModel();
 			model.removeRow(selectedIndexes[i]);
 		}
-		//
-		//TO DO
-		//
+		//Set the new position for each row, so they remain in order.
+		for (int i=0; i < model.getRowCount(); i++) {
+			model.setValueAt(i+1, i, 0);
+		}
 	}
 }

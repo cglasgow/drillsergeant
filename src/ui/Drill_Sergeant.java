@@ -31,6 +31,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 import javax.swing.border.EtchedBorder;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.JRadioButton;
 import java.awt.Component;
 import javax.swing.JToggleButton;
@@ -531,6 +532,7 @@ public class Drill_Sergeant {
 				int choice = JOptionPane.showConfirmDialog(cards, "Are you sure you want to cancel? All work will be lost.", "Cancel", JOptionPane.YES_NO_OPTION);
 				if (choice == JOptionPane.YES_OPTION) {
 					resetEditScreen();
+					resetPreview();
 					swapView("card1");
 				} else {
 					//Do nothing except close dialog box.
@@ -568,12 +570,14 @@ public class Drill_Sergeant {
 						null, options, options[0]);
 				
 				if (choice == JOptionPane.NO_OPTION) {
+					resetPreview();
 					newWorkout.setLengthInSecs(Integer.toString(newWorkout.calculateLengthInSecs()));
 					newWorkout.save(handler);
 					xmlNeedsParsing = true; //Set to true so that the xml will be re-parsed before the Workout List is opened again.
 					loadWorkout();
 					swapView("card4");
 				} else if (choice == JOptionPane.YES_OPTION) {
+					resetPreview();
 					newWorkout.save(handler);
 					try {
 						handler.clearWorkoutList();
@@ -955,6 +959,20 @@ public class Drill_Sergeant {
 		//
 	}
 	
+	//************************************************************
+	// resetPreview
+	//		Clear all exercises stored in the Preview pop-up window.
+	//************************************************************
+	public void resetPreview() {
+		
+		frmPreview.model = (DefaultTableModel)frmPreview.table.getModel();
+		int rowCount = frmPreview.model.getRowCount();
+		System.out.println("Number of rows to clear: " + rowCount);
+		for (int i = 0; i < rowCount; i++) {
+			frmPreview.model.removeRow(0);
+		}
+	}
+	
 	
 	//************************************************************
 	// togglePreviewWindow
@@ -969,6 +987,14 @@ public class Drill_Sergeant {
 		}
 	}
 	
+	
+	//************************************************************
+	// log
+	//		Wrapper for System.out.println()
+	//************************************************************
+	public void log(String logString) {
+		System.out.println(logString);
+	}
 	
 	//************************************************************
 	// mdPrint
