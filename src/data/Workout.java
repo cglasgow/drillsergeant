@@ -73,7 +73,7 @@ public class Workout {
 	
 	public int calculateLengthInSecs() {
 		int totalLength = 0;
-		for (int i=0; i <= this.exercises.size(); i++) {
+		for (int i=0; i < this.exercises.size(); i++) {
 			totalLength += this.getExercise(i).getTotalTime();
 		}
 		return totalLength;
