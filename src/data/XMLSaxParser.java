@@ -108,8 +108,14 @@ public class XMLSaxParser extends DefaultHandler {
         return workoutList;
     }
     
-    public void addToWorkoutList(Workout theWorkout) {
-    	workoutList.add(theWorkout);
+    public void addToWorkoutList(Workout theWorkout, int saveIndex) {
+    	if (saveIndex == -1) {
+    		//Add new workout to the list.
+    		workoutList.add(theWorkout);
+    	} else {
+    		//Overwrite existing workout.
+    		workoutList.set(saveIndex, theWorkout);
+    	}
     }
     
     public void removeFromWorkoutList(int index) {

@@ -95,7 +95,6 @@ public class Drill_Sergeant {
 	private	ImageIcon 			okIcon = new ImageIcon(Drill_Sergeant.class.getResource("/ui/resources/dialog-ok-apply-5_32x32.png"));;
 	private Workout 			newWorkout;
 	private ActiveWorkout 		activeWorkout;
-	//private Workout[] 			workouts = new Workout[50];		//Stores the array of Workout objects, creating a "workout list".
 	private String 				workoutName = new String();
 	private XMLSaxParser 		handler = new XMLSaxParser();
 	private Boolean				xmlNeedsParsing = true;
@@ -109,7 +108,9 @@ public class Drill_Sergeant {
 	private Boolean 			isWorkoutRunning = false;
 	private Boolean 			isWorkoutPaused = false;
 	private final Color			DS_BLUE = new Color(51, 153, 255);
-
+	private Boolean				isCreatingWorkout;
+	private int					currentWorkoutIndex;						//Keeps track of the index of an existing workout being edited, so that when it's saved, it can overwrite itself.
+	
 	//************************************************************
 	// Drill_Sergeant
 	//		Initialize the contents of the frame.
@@ -191,6 +192,8 @@ public class Drill_Sergeant {
 				newWorkout = new Workout(temp);
 				String workoutName = newWorkout.getName();
 				if (workoutName != null) {
+					isCreatingWorkout = true;
+					currentWorkoutIndex = -1;		//Set to -1 since the workout is new and does not yet exist in the Workout list.
 					txtWorkout.setText(workoutName);
 					swapView("card3");
 					togglePreviewWindow();
@@ -315,8 +318,8 @@ public class Drill_Sergeant {
 		JButton btnEdit = new JButton("   Edit");
 		btnEdit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int selectedIndex = listWorkout.getSelectedIndex();
-				selectWorkout(handler, selectedIndex, "btnEdit");
+				currentWorkoutIndex = listWorkout.getSelectedIndex();
+				selectWorkout(handler, currentWorkoutIndex, "btnEdit");
 			}
 		});
 		btnEdit.setIcon(new ImageIcon(Drill_Sergeant.class.getResource("/ui/resources/edit-4.png")));
@@ -598,7 +601,7 @@ public class Drill_Sergeant {
 					frmPreview.setVisible(false);
 					btnDelete2.setVisible(false);
 					newWorkout.setLengthInSecs(Integer.toString(newWorkout.calculateLengthInSecs()));
-					newWorkout.save(handler);
+					newWorkout.save(handler, currentWorkoutIndex);
 					xmlNeedsParsing = true; //Set to true so that the xml will be re-parsed before the Workout List is opened again.
 					loadWorkout();
 					swapView("card4");
@@ -606,7 +609,7 @@ public class Drill_Sergeant {
 					resetPreview();
 					frmPreview.setVisible(false);
 					btnDelete2.setVisible(false);
-					newWorkout.save(handler);
+					newWorkout.save(handler, currentWorkoutIndex);
 					try {
 						handler.clearWorkoutList();
 						parseXML("config/user_config.xml");
@@ -1123,6 +1126,7 @@ public class Drill_Sergeant {
 			loadWorkout();
 			swapView("card4");
 		} else if (callingBtnName == "btnEdit") {
+			isCreatingWorkout = false;
 			swapView("card3");
 			togglePreviewWindow();
 			

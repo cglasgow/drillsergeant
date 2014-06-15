@@ -79,7 +79,7 @@ public class Workout {
 		return totalLength;
 	}
 	
-	public void save(XMLSaxParser theHandler) {
+	public void save(XMLSaxParser theHandler, int saveIndex) {
 		//Update the "Last Modified" date.
 		DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
 		Date date = new Date();
@@ -87,7 +87,8 @@ public class Workout {
 		setLastModified(dateString);
 		
 		//Save
-		theHandler.addToWorkoutList(this);
+		theHandler.addToWorkoutList(this, saveIndex);
+		
 		//Create a new XML file with the updated data.
 		XMLWriter theXMLWriter = new XMLWriter();
 		theXMLWriter.writeXML(theHandler);
