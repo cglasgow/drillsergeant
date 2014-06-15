@@ -8,6 +8,9 @@
             <Exercise name="Pullups" pos="3" reps="20" restAfterMin="1" restAfterSec="0" sets="3" timeBetweenMin="0" timeBetweenSec="10"/>
             <Exercise name="Situps" pos="4" reps="20" restAfterMin="1" restAfterSec="0" sets="3" timeBetweenMin="0" timeBetweenSec="10"/>
         </Workout>
+        <Workout dateCreated="06/14/2014 10:39:48" id="" lastModified="06/14/2014 10:48:18" name="a">
+            <Exercise name="Crunches" pos="0" reps="5" restAfterMin="0" restAfterSec="0" sets="3" timeBetweenMin="0" timeBetweenSec="5"/>
+        </Workout>
     </Workouts>
     <Settings>
         <Sound value="off"/>

@@ -107,6 +107,7 @@ public class Drill_Sergeant {
 	private WorkoutTimerTask 	setTimeCountdownTask;
 	private Boolean 			isWorkoutRunning = false;
 	private Boolean 			isWorkoutPaused = false;
+	private Boolean 			isWorkoutComplete = false;
 	private final Color			DS_BLUE = new Color(51, 153, 255);
 	private Boolean				isCreatingWorkout;
 	private int					currentWorkoutIndex;						//Keeps track of the index of an existing workout being edited, so that when it's saved, it can overwrite itself.
@@ -818,7 +819,7 @@ public class Drill_Sergeant {
 			public void actionPerformed(ActionEvent arg0) {
 				int choice = JOptionPane.showConfirmDialog(cards, "Are you sure you want to end this workout?", "End Workout", JOptionPane.YES_NO_OPTION);
 				if (choice == JOptionPane.YES_OPTION) {
-					if (isWorkoutRunning) {
+					if (isWorkoutRunning || isWorkoutComplete) {
 						resetWorkout();
 					}
 					swapView("card1");
@@ -838,7 +839,7 @@ public class Drill_Sergeant {
 			public void actionPerformed(ActionEvent arg0) {
 				int choice = JOptionPane.showConfirmDialog(cards, "Are you sure you want to reset this workout?", "Reset Workout", JOptionPane.YES_NO_OPTION);
 				if (choice == JOptionPane.YES_OPTION) {
-					if (isWorkoutRunning) {
+					if (isWorkoutRunning || isWorkoutComplete) {
 						resetWorkout();
 					}
 				} else {
@@ -1233,13 +1234,8 @@ public class Drill_Sergeant {
 		
 		//Re-instantiate the activeWorkout Object.
 		activeWorkout = new ActiveWorkout(newWorkout);
-	}
-	
-	//************************************************************
-	// endWorkout
-	//************************************************************
-	public void endWorkout() {
 		
+		isWorkoutComplete = false;
 	}
 		
 		
@@ -1285,6 +1281,7 @@ public class Drill_Sergeant {
 				txtCurrent.setForeground(DS_BLUE);
 				txtCurrent.setText("Workout Completed!");
 				isWorkoutRunning = false;
+				isWorkoutComplete = true;
 				btnStart.setEnabled(false);
 		}
 		return areExercisesRemaining;
