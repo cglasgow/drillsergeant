@@ -70,7 +70,7 @@ public class Preview extends JFrame {
 			new Object[][] {
 			},
 			new String[] {
-				"#", "Name", "Sets", "Reps/Set", "Rest Between", "Rest After"
+				"#", "Name", "Sets", "Reps/Set", "Time Between", "Rest After"
 			}
 		) {
 			Class[] columnTypes = new Class[] {
