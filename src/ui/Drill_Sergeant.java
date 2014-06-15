@@ -818,7 +818,9 @@ public class Drill_Sergeant {
 			public void actionPerformed(ActionEvent arg0) {
 				int choice = JOptionPane.showConfirmDialog(cards, "Are you sure you want to end this workout?", "End Workout", JOptionPane.YES_NO_OPTION);
 				if (choice == JOptionPane.YES_OPTION) {
-					resetWorkout();
+					if (isWorkoutRunning) {
+						resetWorkout();
+					}
 					swapView("card1");
 				} else {
 					//Do nothing except close dialog box.
@@ -836,7 +838,9 @@ public class Drill_Sergeant {
 			public void actionPerformed(ActionEvent arg0) {
 				int choice = JOptionPane.showConfirmDialog(cards, "Are you sure you want to reset this workout?", "Reset Workout", JOptionPane.YES_NO_OPTION);
 				if (choice == JOptionPane.YES_OPTION) {
-					resetWorkout();
+					if (isWorkoutRunning) {
+						resetWorkout();
+					}
 				} else {
 					//Do nothing except close dialog box.
 				}
