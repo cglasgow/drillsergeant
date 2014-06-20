@@ -57,6 +57,7 @@ public class XMLSaxParser extends DefaultHandler {
         	   exercise.setSets(attributes.getValue("sets"));
         	   exercise.setTimeBetween(attributes.getValue("timeBetweenMin"), attributes.getValue("timeBetweenSec"));
         	   exercise.setRestAfter(attributes.getValue("restAfterMin"), attributes.getValue("restAfterSec"));
+        	   exercise.setTotalTime();
         	   workout.addExercise(exercise);
            } else if (qName.equalsIgnoreCase("Settings")) {
         	   settings = new Settings();

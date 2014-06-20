@@ -58,6 +58,8 @@ import javax.swing.JLayeredPane;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import util.Format;
+
 import data.Exercise;
 import data.Workout;
 import data.ActiveWorkout;
@@ -79,6 +81,7 @@ public class Drill_Sergeant {
 	private JProgressBar 		progressBar;
 	private JLabel 				lblNextSetStarts;
 	private JLabel 				lblWorkoutTitle;
+	private JLabel 				dlblTotalWorkoutTime;
 	private JButton				btnPreview;
 	private JButton 			btnStart;
 	private JButton				btnDelete2;
@@ -501,12 +504,24 @@ public class Drill_Sergeant {
 		lblAfterSec.setBounds(326, 354, 16, 14);
 		panelTitleBorderCard3.add(lblAfterSec);
 		
+		//Total Workout Time (static label)
+		JLabel lblTotalWorkoutTime = new JLabel("Total Workout Time");
+		lblTotalWorkoutTime.setBounds(386, 347, 98, 14);
+		panelTitleBorderCard3.add(lblTotalWorkoutTime);
+		
+		//Total Workout Time (dynamic label)
+		dlblTotalWorkoutTime = new JLabel("00:00:00");
+		dlblTotalWorkoutTime.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		dlblTotalWorkoutTime.setHorizontalAlignment(SwingConstants.CENTER);
+		dlblTotalWorkoutTime.setBounds(386, 358, 98, 23);
+		panelTitleBorderCard3.add(dlblTotalWorkoutTime);
+		
 		//-------------
 		// Buttons
 		//-------------
 		//Add
 		JButton btnAdd = new JButton(" Add");
-		btnAdd.setBounds(386, 336, 98, 39);
+		btnAdd.setBounds(386, 233, 98, 39);
 		panelTitleBorderCard3.add(btnAdd);
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -524,7 +539,8 @@ public class Drill_Sergeant {
 				newExercise.setRestAfter((String)cbAfterMin.getSelectedItem(), (String)cbAfterSec.getSelectedItem());
 				newExercise.setTotalTime();
 				newWorkout.addExercise(newExercise);
-				newWorkout.setLengthInSecs(Integer.toString(newExercise.getTotalTime()));
+				//newWorkout.setLengthInSecs(Integer.toString(newExercise.getTotalTime()));
+				dlblTotalWorkoutTime.setText( Format.toHHMMSS(newWorkout.calculateLengthInSecs()) );
 				int previewIndex = frmPreview.add(newExercise);
 				newExercise.setPosition(previewIndex);
 				//ImageIcon okIcon = new ImageIcon(Drill_Sergeant.class.getResource("/ui/resources/dialog-ok-apply-5_32x32.png"));
@@ -541,6 +557,7 @@ public class Drill_Sergeant {
 				int index = frmPreview.delete();
 				if (index != -1) {
 					newWorkout.deleteExercise(index);
+					dlblTotalWorkoutTime.setText( Format.toHHMMSS(newWorkout.calculateLengthInSecs()) );
 				} else {
 					JOptionPane.showMessageDialog(cards, "Please select an exercise to Delete from the Workout Preview window.", "Notification", JOptionPane.ERROR_MESSAGE);
 				}
@@ -548,7 +565,7 @@ public class Drill_Sergeant {
 		});
 		btnDelete2.setIcon(new ImageIcon(Drill_Sergeant.class.getResource("/ui/resources/edit-delete-2_16x16.png")));
 		btnDelete2.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		btnDelete2.setBounds(386, 262, 98, 39);
+		btnDelete2.setBounds(386, 159, 98, 39);
 		panelTitleBorderCard3.add(btnDelete2);
 		
 		//Cancel
@@ -610,6 +627,7 @@ public class Drill_Sergeant {
 					resetPreview();
 					frmPreview.setVisible(false);
 					btnDelete2.setVisible(false);
+					newWorkout.setLengthInSecs(Integer.toString(newWorkout.calculateLengthInSecs()));
 					newWorkout.save(handler, currentWorkoutIndex);
 					try {
 						handler.clearWorkoutList();
@@ -993,6 +1011,7 @@ public class Drill_Sergeant {
 		//
 		//TO DO
 		//
+		dlblTotalWorkoutTime.setText("00:00:00");
 	}
 	
 	//************************************************************
@@ -1132,9 +1151,9 @@ public class Drill_Sergeant {
 			swapView("card4");
 		} else if (callingBtnName == "btnEdit") {
 			isCreatingWorkout = false;
+			dlblTotalWorkoutTime.setText( Format.toHHMMSS(Integer.parseInt(newWorkout.getLengthInSecs())) );
 			swapView("card3");
 			togglePreviewWindow();
-			
 		}
 	}
 	
