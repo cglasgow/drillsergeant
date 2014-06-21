@@ -44,7 +44,19 @@ public class Workout {
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		if (name == null) {
+			DateFormat dateFormat = new SimpleDateFormat("MMddyyyy");
+			Date date = new Date();
+			String dateString = dateFormat.format(date);
+			this.name = "UNNAMED_" + dateString;
+		} else if(name.length() < 1) {
+			DateFormat dateFormat = new SimpleDateFormat("MMddyyyy");
+			Date date = new Date();
+			String dateString = dateFormat.format(date);
+			this.name = "UNNAMED_" + dateString;
+		}else {
+			this.name = name;
+		}
 	}
 	
 	public String getDateCreated() {

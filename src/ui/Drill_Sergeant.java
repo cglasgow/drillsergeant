@@ -282,7 +282,9 @@ public class Drill_Sergeant {
 		btnOpen2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int selectedIndex = listWorkout.getSelectedIndex();
-				selectWorkout(handler, selectedIndex, "btnOpen2");
+				if (selectedIndex != -1) {
+					selectWorkout(handler, selectedIndex, "btnOpen2");
+				}
 			}
 		});
 		btnOpen2.setIcon(new ImageIcon(Drill_Sergeant.class.getResource("/ui/resources/document-open-folder_32x32.png")));
@@ -294,22 +296,29 @@ public class Drill_Sergeant {
 		JButton btnDelete = new JButton("   Delete");
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//Remove the selected workout from the workoutList ArrayList.
 				int selectedIndex = listWorkout.getSelectedIndex();
-				handler.removeFromWorkoutList(selectedIndex);
-				//Rewrite the xml with the updated workoutList.
-				XMLWriter theXMLWriter = new XMLWriter();
-				theXMLWriter.writeXML(handler);
-				//Now, wipeout the entire workoutList ArrayList since it is about to be re-created from the new xml file.
-				handler.clearWorkoutList();
-				//Parse the newly written xml.
-				try {
-					parseXML("config/user_config.xml");
-					clearWorkoutList(); //Clear the JList containing the workouts.
-					displayWorkoutList(handler);
-				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+				if (selectedIndex != -1) {
+					int choice = JOptionPane.showConfirmDialog(cards, "Are you sure you want to delete this workout?", "Delete", JOptionPane.YES_NO_OPTION);
+					if (choice == JOptionPane.YES_OPTION) {
+						//Remove the selected workout from the workoutList ArrayList.
+						handler.removeFromWorkoutList(selectedIndex);
+						//Rewrite the xml with the updated workoutList.
+						XMLWriter theXMLWriter = new XMLWriter();
+						theXMLWriter.writeXML(handler);
+						//Now, wipeout the entire workoutList ArrayList since it is about to be re-created from the new xml file.
+						handler.clearWorkoutList();
+						//Parse the newly written xml.
+						try {
+							parseXML("config/user_config.xml");
+							clearWorkoutList(); //Clear the JList containing the workouts.
+							displayWorkoutList(handler);
+						} catch (Exception e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					} else {
+						//Do nothing except close dialog box.
+					}
 				}
 			}
 		});
@@ -322,8 +331,11 @@ public class Drill_Sergeant {
 		JButton btnEdit = new JButton("   Edit");
 		btnEdit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				currentWorkoutIndex = listWorkout.getSelectedIndex();
-				selectWorkout(handler, currentWorkoutIndex, "btnEdit");
+				int selectedIndex = listWorkout.getSelectedIndex();
+				if (selectedIndex !=-1) {
+					currentWorkoutIndex = selectedIndex;
+					selectWorkout(handler, currentWorkoutIndex, "btnEdit");
+				}
 			}
 		});
 		btnEdit.setIcon(new ImageIcon(Drill_Sergeant.class.getResource("/ui/resources/edit-4.png")));
@@ -369,12 +381,25 @@ public class Drill_Sergeant {
 				String selected = (String)cbExercises.getSelectedItem();
 				System.out.print(selected);
 				if (selected == "**Custom**") {
-					selected = (String) JOptionPane.showInputDialog(cards, "Please enter a name for the custom exercise:", "Name", JOptionPane.INFORMATION_MESSAGE);
-					System.out.print(selected);
-					cbExercises.setEditable(true);
-					cbExercises.setSelectedItem(selected);
-					cbExercises.addItem(selected);
-					cbExercises.setEditable(false);
+					frmDrillSergeant.requestFocus(); //Make main application window request focus, so user doesn't have to click on input dialog before typing.
+					String customName = (String) JOptionPane.showInputDialog(cards, "Please enter a name for the custom exercise:", "Name", JOptionPane.INFORMATION_MESSAGE);
+					//Add the custom exercise if user doesn't cancel at input prompt.
+					if (customName != null) {
+						if (customName.length() > 0) {
+							System.out.print(customName);
+							cbExercises.setEditable(true);
+							cbExercises.setSelectedItem(customName);
+							cbExercises.addItem(customName);
+							cbExercises.setEditable(false);
+						} else {
+							JOptionPane.showMessageDialog(cards, "The name entered was blank.  Please try again.", "Notification", JOptionPane.ERROR_MESSAGE);
+							cbName.setSelectedIndex(0);
+						}
+					} else {
+						//Reset the combo box.
+						cbName.setSelectedIndex(0);
+					}
+					
 				}
 			}
 		});
@@ -559,7 +584,7 @@ public class Drill_Sergeant {
 					newWorkout.deleteExercise(index);
 					dlblTotalWorkoutTime.setText( Format.toHHMMSS(newWorkout.calculateLengthInSecs()) );
 				} else {
-					JOptionPane.showMessageDialog(cards, "Please select an exercise to Delete from the Workout Preview window.", "Notification", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(cards, "Please select an exercise to delete from the Workout Preview window.", "Notification", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -572,7 +597,7 @@ public class Drill_Sergeant {
 		JButton btnCancel = new JButton("Cancel");
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int choice = JOptionPane.showConfirmDialog(cards, "Are you sure you want to cancel? All work will be lost.", "Cancel", JOptionPane.YES_NO_OPTION);
+				int choice = JOptionPane.showConfirmDialog(cards, "Are you sure you want to cancel? All unsaved work will be lost.", "Cancel", JOptionPane.YES_NO_OPTION);
 				if (choice == JOptionPane.YES_OPTION) {
 					resetEditScreen();
 					resetPreview();
@@ -615,37 +640,49 @@ public class Drill_Sergeant {
 						null, options, options[0]);
 				
 				if (choice == JOptionPane.NO_OPTION) {
-					resetPreview();
-					frmPreview.setVisible(false);
-					btnDelete2.setVisible(false);
-					newWorkout.setLengthInSecs(Integer.toString(newWorkout.calculateLengthInSecs()));
-					newWorkout.save(handler, currentWorkoutIndex);
-					xmlNeedsParsing = true; //Set to true so that the xml will be re-parsed before the Workout List is opened again.
-					loadWorkout();
-					swapView("card4");
-				} else if (choice == JOptionPane.YES_OPTION) {
-					resetPreview();
-					frmPreview.setVisible(false);
-					btnDelete2.setVisible(false);
-					newWorkout.setLengthInSecs(Integer.toString(newWorkout.calculateLengthInSecs()));
-					newWorkout.save(handler, currentWorkoutIndex);
-					try {
-						handler.clearWorkoutList();
-						parseXML("config/user_config.xml");
-						xmlNeedsParsing = false;
-					} catch (Exception e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
+					if (newWorkout.getExerciseListSize() > 0) {
+						newWorkout.setName(txtWorkout.getText());
+						newWorkout.setLengthInSecs(Integer.toString(newWorkout.calculateLengthInSecs()));
+						newWorkout.save(handler, currentWorkoutIndex);
+						xmlNeedsParsing = true; //Set to true so that the xml will be re-parsed before the Workout List is opened again.
+						loadWorkout();
+						resetEditScreen();
+						resetPreview();
+						frmPreview.setVisible(false);
+						btnDelete2.setVisible(false);
+						swapView("card4");
+					} else {
+						JOptionPane.showMessageDialog(cards, "Cannot save - The workout doesn't contain any exercises.  Please add exercises and try again.", "Notification", JOptionPane.ERROR_MESSAGE);
 					}
-					clearWorkoutList();
-					displayWorkoutList(handler);
-					swapView("card1");
+				} else if (choice == JOptionPane.YES_OPTION) {
+					if (newWorkout.getExerciseListSize() > 0) {
+						newWorkout.setName(txtWorkout.getText());
+						newWorkout.setLengthInSecs(Integer.toString(newWorkout.calculateLengthInSecs()));
+						newWorkout.save(handler, currentWorkoutIndex);
+						resetEditScreen();
+						resetPreview();
+						frmPreview.setVisible(false);
+						btnDelete2.setVisible(false);
+						try {
+							handler.clearWorkoutList();
+							parseXML("config/user_config.xml");
+							xmlNeedsParsing = false;
+						} catch (Exception e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						clearWorkoutList();
+						displayWorkoutList(handler);
+						swapView("card1");
+					} else {
+						JOptionPane.showMessageDialog(cards, "Cannot save.  The workout doesn't contain any exercises.   Please add exercises and try again.", "Notification", JOptionPane.ERROR_MESSAGE);
+					}
 				} else if (choice == JOptionPane.CANCEL_OPTION) {
 					//do nothing except close dialog box
 				}
 			}
 		});
-		btnSave.setIcon(null);
+		btnSave.setIcon(new ImageIcon(Drill_Sergeant.class.getResource("/ui/resources/document-save-3_24x24.png")));
 		btnSave.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		btnSave.setBounds(372, 439, 132, 74);
 		card3.add(btnSave);
@@ -1008,11 +1045,17 @@ public class Drill_Sergeant {
 	//		Clear all fields on the Edit Workout screen.
 	//************************************************************
 	public void resetEditScreen() {
-		//
-		//TO DO
-		//
+		txtWorkout.setText("");
+		cbName.setSelectedIndex(0);
+		cbSets.setSelectedIndex(0);
+		cbReps.setSelectedIndex(0);
+		cbBetweenMin.setSelectedIndex(0);
+		cbBetweenSec.setSelectedIndex(0);
+		cbAfterMin.setSelectedIndex(0);
+		cbAfterSec.setSelectedIndex(0);
 		dlblTotalWorkoutTime.setText("00:00:00");
 	}
+	
 	
 	//************************************************************
 	// resetPreview
@@ -1140,12 +1183,7 @@ public class Drill_Sergeant {
 		System.out.println(newWorkout.toString());
 		txtWorkout.setText(newWorkout.getName());
 		
-		for (int i=0; i<newWorkout.getExerciseListSize(); i++) {
-			int previewIndex = frmPreview.add(newWorkout.getExercise(i));
-			newWorkout.getExercise(i).setPosition(previewIndex);
-		}
-		
-		//Switch to either the "Active Workout" or "Edit Workout"
+		//Switch to either the "Active Workout" or "Edit Workout" screen.
 		if (callingBtnName == "btnOpen2") {
 			loadWorkout();
 			swapView("card4");
@@ -1153,6 +1191,11 @@ public class Drill_Sergeant {
 			isCreatingWorkout = false;
 			dlblTotalWorkoutTime.setText( Format.toHHMMSS(Integer.parseInt(newWorkout.getLengthInSecs())) );
 			swapView("card3");
+			//Populate the Preview window.
+			for (int i=0; i<newWorkout.getExerciseListSize(); i++) {
+				int previewIndex = frmPreview.add(newWorkout.getExercise(i));
+				newWorkout.getExercise(i).setPosition(previewIndex);
+			}
 			togglePreviewWindow();
 		}
 	}

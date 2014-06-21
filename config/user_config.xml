@@ -1,18 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <UserConfig>
     <Workouts>
-        <Workout dateCreated="06/14/2014 08:26:40" id="" lastModified="06/20/2014 12:00:58" name="Test 1">
-            <Exercise name="Crunches" pos="0" reps="20" restAfterMin="1" restAfterSec="0" sets="3" timeBetweenMin="0" timeBetweenSec="10"/>
-            <Exercise name="Lunges" pos="1" reps="20" restAfterMin="1" restAfterSec="0" sets="3" timeBetweenMin="0" timeBetweenSec="10"/>
-            <Exercise name="Pushups" pos="2" reps="20" restAfterMin="1" restAfterSec="0" sets="3" timeBetweenMin="0" timeBetweenSec="10"/>
-            <Exercise name="Pullups" pos="3" reps="20" restAfterMin="1" restAfterSec="0" sets="3" timeBetweenMin="0" timeBetweenSec="10"/>
-            <Exercise name="Situps" pos="4" reps="20" restAfterMin="1" restAfterSec="0" sets="3" timeBetweenMin="0" timeBetweenSec="10"/>
+        <Workout dateCreated="06/21/2014 01:25:33" id="" lastModified="06/21/2014 05:31:16" name="cbg-mod">
+            <Exercise name="reverse curls" pos="0" reps="15" restAfterMin="0" restAfterSec="0" sets="5" timeBetweenMin="0" timeBetweenSec="30"/>
         </Workout>
-        <Workout dateCreated="06/14/2014 10:39:48" id="" lastModified="06/14/2014 10:48:18" name="a">
-            <Exercise name="Crunches" pos="0" reps="5" restAfterMin="0" restAfterSec="0" sets="3" timeBetweenMin="0" timeBetweenSec="5"/>
-        </Workout>
-        <Workout dateCreated="06/20/2014 12:03:59" id="" lastModified="06/20/2014 12:09:38" name="c">
-            <Exercise name="Pushups" pos="0" reps="40" restAfterMin="0" restAfterSec="0" sets="24" timeBetweenMin="60" timeBetweenSec="0"/>
+        <Workout dateCreated="06/21/2014 06:10:39" id="" lastModified="06/21/2014 06:15:32" name="UNNAMED_06212014">
+            <Exercise name="Lunges" pos="0" reps="5" restAfterMin="0" restAfterSec="0" sets="1" timeBetweenMin="0" timeBetweenSec="0"/>
         </Workout>
     </Workouts>
     <Settings>
