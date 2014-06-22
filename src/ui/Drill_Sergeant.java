@@ -563,13 +563,16 @@ public class Drill_Sergeant {
 				newExercise.setTimeBetween((String)cbBetweenMin.getSelectedItem(), (String)cbBetweenSec.getSelectedItem());
 				newExercise.setRestAfter((String)cbAfterMin.getSelectedItem(), (String)cbAfterSec.getSelectedItem());
 				newExercise.setTotalTime();
-				newWorkout.addExercise(newExercise);
-				//newWorkout.setLengthInSecs(Integer.toString(newExercise.getTotalTime()));
-				dlblTotalWorkoutTime.setText( Format.toHHMMSS(newWorkout.calculateLengthInSecs()) );
-				int previewIndex = frmPreview.add(newExercise);
-				newExercise.setPosition(previewIndex);
-				//ImageIcon okIcon = new ImageIcon(Drill_Sergeant.class.getResource("/ui/resources/dialog-ok-apply-5_32x32.png"));
-				JOptionPane.showMessageDialog(cards, "Exercise added!", "Notification", JOptionPane.INFORMATION_MESSAGE, okIcon);
+				if (newWorkout.addExercise(newExercise) != -1) {
+					//newWorkout.setLengthInSecs(Integer.toString(newExercise.getTotalTime()));
+					dlblTotalWorkoutTime.setText( Format.toHHMMSS(newWorkout.calculateLengthInSecs()) );
+					int previewIndex = frmPreview.add(newExercise);
+					newExercise.setPosition(previewIndex);
+					//ImageIcon okIcon = new ImageIcon(Drill_Sergeant.class.getResource("/ui/resources/dialog-ok-apply-5_32x32.png"));
+					JOptionPane.showMessageDialog(cards, "Exercise added!", "Notification", JOptionPane.INFORMATION_MESSAGE, okIcon);
+				} else {
+					JOptionPane.showMessageDialog(cards, "Cannot add - Exercise limit reached for this workout!", "Notification", JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		});
 		btnAdd.setIcon(new ImageIcon(Drill_Sergeant.class.getResource("/ui/resources/edit-add-2_16x16.png")));

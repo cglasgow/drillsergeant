@@ -17,6 +17,7 @@ public class Workout {
 	protected String lengthInSecs;
 	protected ArrayList<Exercise> exercises = new ArrayList<Exercise>(); //The list of exercises contained within the workout.
 	protected int currentExerciseIndex = 0;
+	private static final int MAX_NUM_EXERCISES = 100; //A limit of 100 exercises per workout should be more than enough for anyone.
 	
 	
 	
@@ -119,10 +120,13 @@ public class Workout {
 	//------------------------------
 	//Exercise-Reated Methods
 	//------------------------------
-	public void addExercise(Exercise theExercise) {
-		if (currentExerciseIndex < 20) {
+	public int addExercise(Exercise theExercise) {
+		if (currentExerciseIndex < MAX_NUM_EXERCISES) {
 			exercises.add(theExercise);
 			currentExerciseIndex++;
+			return 0;
+		} else {
+			return -1;
 		}
 	}
 	
